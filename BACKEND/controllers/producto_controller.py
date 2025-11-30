@@ -218,11 +218,20 @@ async def crear_producto_completo(
             name = re.sub(r'\s+', '_', name).strip('_')
             return name
 
-        safe_name = _sanitize_filename(file.filename or 'upload')
+        safe_name = _sanitize_filename((file.filename or 'upload'))
+        # avoid any '..' sneaking in
+        safe_name = safe_name.replace('..', '_')
         filename = f"{uuid.uuid4().hex}__{safe_name}"
-        save_path = os.path.join(uploads_dir, filename)
+        # build final path and ensure it's inside the uploads directory
+        from pathlib import Path
+
+        uploads_path = Path(uploads_dir).resolve()
+        final_path = (uploads_path / filename).resolve()
+        if not str(final_path).startswith(str(uploads_path) + os.sep) and final_path != uploads_path:
+            raise HTTPException(status_code=400, detail="Invalid filename")
+
         contents = await file.read()
-        with open(save_path, 'wb') as f:
+        with open(final_path, 'wb') as f:
             f.write(contents)
         url = f"/static/uploads/{filename}"
         db_video = Video(producto_id=db_producto.id, url=url, fecha_subida=datetime.datetime.utcnow())

@@ -1237,7 +1237,7 @@ INSERT INTO `roles` (`id_rol`, `nombre`, `estado`) VALUES
 
 -- Dumping data for table josnishop.usuarios: ~52 rows (approximately)
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contraseña`, `rol_id`, `estado`, `tipo_documento`, `numero_documento`, `fecha_nacimiento`, `seguridad_pregunta`, `seguridad_respuesta`) VALUES
-	(1, 'Josthin Paz', 'josthinpaz2@gmail.com', '$2b$12$YXcU22lXSlqSvTFtXT0tWO7ZWPX3z70sRDlg8ZZ5n54iIyaTFjnu6', 1, 1, 'CC', '1021314075', '10-07-2007', '', ''),
+	(1, 'Josthin Paz', 'josthinpaz2@gmail.com', '<BCRYPT_REDACTED>', 1, 1, 'CC', '1021314075', '10-07-2007', '', ''),
 	(2, 'María Gómez', 'Cherith1605@gmail.com', '123', 2, 1, NULL, NULL, NULL, NULL, NULL),
 	(3, 'Carlos Ruiz', 'carlos.ruiz@mail.com', 'cliente123', 2, 1, NULL, NULL, NULL, NULL, NULL),
 	(4, 'Laura Sánchez', 'laura.sanchez@mail.com', 'cliente123', 2, 1, NULL, NULL, NULL, NULL, NULL),
@@ -1288,7 +1288,7 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contraseña`, `rol_id
 	(49, 'Guillermo Vargas', 'guillermo.vargas@mail.com', 'cliente123', 2, 1, NULL, NULL, NULL, NULL, NULL),
 	(50, 'Isabel Castillo', 'isabel.castillo@mail.com', 'cliente123', 2, 1, NULL, NULL, NULL, NULL, NULL),
 	(51, 'juan', 'juan@gmail.com', '123', 1, NULL, NULL, NULL, NULL, NULL, NULL),
-	(52, 'Josnishop Cliente', 'Josnishop1@gmail.com', '$2b$12$t3amBDexc4PKBjUQLNARhu6QWJ4pfDHDPX9OUqPnsliBMhgozuwk6', 2, 1, 'CC', '1021314075', '2025-11-24', 'Color favorito', '$2b$12$NhY09TzMUB7glCnC6F2wcOqyi78KWd2ztKV.5LXt/3TJ0kbrM2Bd2');
+	(52, 'Josnishop Cliente', 'Josnishop1@gmail.com', '<BCRYPT_REDACTED>', 2, 1, 'CC', '1021314075', '2025-11-24', 'Color favorito', '<BCRYPT_REDACTED>');
 
 -- Dumping data for table josnishop.videos: ~25 rows (approximately)
 INSERT INTO `videos` (`id`, `producto_id`, `usuario_id`, `tipo`, `url`, `fecha_subida`) VALUES

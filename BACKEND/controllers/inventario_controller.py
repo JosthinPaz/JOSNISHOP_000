@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 # Session: para el tipado de la variable de sesión de la base de datos.
 from sqlalchemy.orm import Session
 from typing import Optional, List
+from sqlalchemy import text
 
 # Importamos las clases y funciones que necesitamos de otros archivos.
 from db.session import SessionLocal
@@ -198,7 +199,9 @@ def carga_masiva_inventario(
 # --- Endpoint de Búsqueda de Inventario por Nombre ---
 @router.get("/buscar")
 def buscar_inventario_por_nombre(nombre: str = Query(...), db: Session = Depends(get_db)):
-    result = db.execute(f"CALL SP_BuscarInventarioPorNombre('{nombre}')")
+    # Use a parameterized text() to avoid SQL injection from `nombre`.
+    stmt = text("CALL SP_BuscarInventarioPorNombre(:nombre)")
+    result = db.execute(stmt, {"nombre": nombre})
     inventarios = []
     for row in result:
         inventarios.append({

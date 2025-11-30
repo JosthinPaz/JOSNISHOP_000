@@ -2,8 +2,19 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+import os
+from dotenv import load_dotenv
 
-SECRET_KEY = "1712/Juli"
+load_dotenv()
+
+# Load JWT secret from environment. Accept either `JWT_SECRET_KEY` (preferred) or legacy `SECRET_KEY`.
+SECRET_KEY = os.getenv("JWT_SECRET_KEY") or os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError(
+        "JWT_SECRET_KEY is not set in environment.\n"
+        "Set a strong secret in your environment (do NOT commit it)."
+    )
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 15
 REFRESH_TOKEN_EXPIRE_DAYS = 7

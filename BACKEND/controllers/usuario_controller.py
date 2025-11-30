@@ -346,13 +346,19 @@ async def upload_foto_perfil(
             name = re.sub(r'\s+', '_', name).strip('_')
             return name
         
-        safe_name = _sanitize_filename(file.filename or 'profile')
+        safe_name = _sanitize_filename((file.filename or 'profile'))
+        safe_name = safe_name.replace('..', '_')
         filename = f"{uuid.uuid4().hex}__{safe_name}"
-        save_path = os.path.join(uploads_dir, filename)
-        
+        from pathlib import Path
+
+        uploads_path = Path(uploads_dir).resolve()
+        final_path = (uploads_path / filename).resolve()
+        if not str(final_path).startswith(str(uploads_path) + os.sep) and final_path != uploads_path:
+            raise HTTPException(status_code=400, detail="Invalid filename")
+
         # Guardar archivo
         contents = await file.read()
-        with open(save_path, 'wb') as f:
+        with open(final_path, 'wb') as f:
             f.write(contents)
         
         url = f"/static/uploads/{filename}"

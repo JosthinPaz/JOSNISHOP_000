@@ -50,8 +50,10 @@ const ProductoDetalle: React.FC = () => {
     if (!productoId) return;
     (async () => {
       try {
+        // Get api base from environment (Vite). If not set, use relative paths.
+        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
         // fetch basic producto
-        const res = await fetch(`http://127.0.0.1:8000/productos/${productoId}`);
+        const res = await fetch(`${API || ''}/productos/${productoId}`);
         if (res.ok) {
           const data = await res.json();
           setProducto(data);
@@ -61,7 +63,7 @@ const ProductoDetalle: React.FC = () => {
       }
 
       try {
-        const res2 = await fetch(`http://127.0.0.1:8000/productos/rich`);
+        const res2 = await fetch(`${API || ''}/productos/rich`);
         if (res2.ok) {
           const list: ProductoRich[] = await res2.json();
           const found = list.find((p) => p.id === productoId);
@@ -72,10 +74,10 @@ const ProductoDetalle: React.FC = () => {
             let imgUrl: string | null = null;
             if (found.image) {
               const v = String(found.image).trim();
-              if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
+                if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
                 imgUrl = v;
               } else {
-                imgUrl = `http://127.0.0.1:8000${v}`;
+                imgUrl = `${API || ''}${v}`;
               }
             }
             setImg(imgUrl);
@@ -86,7 +88,7 @@ const ProductoDetalle: React.FC = () => {
       }
       // fetch inventory for this product and compute available quantity
       try {
-        const invRes = await fetch(`http://127.0.0.1:8000/inventarios/reportes?producto_id=${productoId}`);
+        const invRes = await fetch(`${API || ''}/inventarios/reportes?producto_id=${productoId}`);
         if (invRes.ok) {
           const invList: InventarioItem[] = await invRes.json();
           // invList is an array of inventories with `cantidad`

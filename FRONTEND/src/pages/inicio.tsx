@@ -57,7 +57,8 @@ const Inicio: React.FC = () => {
     // cargar categorias desde backend para el select
     (async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/categorias/');
+        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+        const res = await fetch(`${API || ''}/categorias/`);
         if (!res.ok) return;
         const data = await res.json();
         // data debería ser array de categorias con {id, nombre}
@@ -83,7 +84,8 @@ const Inicio: React.FC = () => {
       if (vendedorId) formData.append('vendedor_id', String(vendedorId));
       if (formFile) formData.append('file', formFile);
 
-      const res = await fetch('http://127.0.0.1:8000/productos/full', {
+      const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+      const res = await fetch(`${API || ''}/productos/full`, {
         method: 'POST',
         body: formData,
       });
@@ -105,7 +107,8 @@ const Inicio: React.FC = () => {
       setShowAddModal(false);
       // Recargar productos sin recargar la página
       try {
-        const res2 = await fetch('http://127.0.0.1:8000/productos/rich');
+        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+        const res2 = await fetch(`${API || ''}/productos/rich`);
         if (res2.ok) {
           const data2 = await res2.json();
           const mapped = data2.map((p: any) => {
@@ -115,7 +118,8 @@ const Inicio: React.FC = () => {
               if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
                 imgUrl = v;
               } else {
-                imgUrl = `http://127.0.0.1:8000${v}`;
+                const API2 = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+                imgUrl = `${API2 || ''}${v}`;
               }
             }
             return {
@@ -152,8 +156,9 @@ const Inicio: React.FC = () => {
     setWhatsappUrl(null);
 
     try {
+      const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
       const userId = Number(localStorage.getItem('userId')) || null;
-      const res = await fetch('http://127.0.0.1:8000/bot/respond', {
+      const res = await fetch(`${API || ''}/bot/respond`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ usuario_origen: userId, mensaje: text, history })
@@ -178,7 +183,8 @@ const Inicio: React.FC = () => {
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/bot/wa');
+        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+        const res = await fetch(`${API || ''}/bot/wa`);
         if (!res.ok) return;
         const d = await res.json();
         if (!mounted) return;

@@ -1,0 +1,22 @@
+meta {
+  name: Actualizar rol
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://127.0.0.1:8000/roles/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Usuario",
+    "estado": false
+  }
+}
+
+settings {
+  encodeUrl: true
+}

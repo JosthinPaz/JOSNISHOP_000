@@ -1,0 +1,1017 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+/* ===== Menú de escritorio (BASE - Se adapta para responsive) ===== */
+.menu {
+  /* Este div parece ser para un menú diferente o antiguo, lo mantendremos oculto para no interferir */
+  display: none;
+}
+
+/* ===== Menú superior (Navbar principal) ===== */
+header {
+  background: #ffe082;
+  padding: 10px 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.logo {
+  width: 100px;
+  margin-right: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.titulo {
+  /* Enlace Categorías en desktop */
+  font-size: 1.3em;
+  margin-right: 20px;
+  color: #111;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.titulo:hover {
+  color: #333;
+}
+
+.buscador-container {
+  /* Barra de búsqueda en desktop */
+  position: relative;
+  display: inline-block;
+  flex: 1;
+}
+
+.buscador {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background: #fff9c4;
+  font-size: 1em;
+  color: #222;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.icono-lupa {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.3em;
+  pointer-events: none;
+}
+
+.iconos {
+  /* Íconos de navegación en desktop (casa, pedidos, carrito, usuario) */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.5em;
+}
+
+.iconos .fa-solid {
+  color: #1a3c1a;
+  margin-right: 5px;
+}
+
+.iniciar-sesion {
+  /* Enlace Iniciar Sesión en desktop */
+  font-weight: bold;
+  color: #111;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.2s;
+}
+
+.iniciar-sesion:hover {
+  color: #333;
+}
+
+/* ===== Botón de hamburguesa para MÓVIL Y ESCRITORIO ===== */
+.hamburger-btn {
+  background: none;
+  border: none;
+  font-size: 2em;
+  color: #222;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+/* ===== Menú lateral hamburguesa (DESPLEGABLE) ===== */
+.hamburger-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background: linear-gradient(180deg, #fff 0%, #fff6db 100%);
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger-menu.active {
+  transform: translateX(0);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2.2em;
+  color: #9b1c10;
+  cursor: pointer;
+  margin: 15px 15px 0 0;
+  align-self: flex-end;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #fb2e01;
+}
+
+.menu-header-logo {
+  display: flex;
+  align-items: center;
+  padding: 20px 20px 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.menu-header-logo .logo {
+  height: 60px;
+  width: auto;
+  margin-right: 15px;
+}
+
+.menu-header-logo .titulo-menu {
+  font-size: 1.5em;
+  color: #123d24;
+  font-weight: 700;
+}
+
+.menu-search-container {
+  position: relative;
+  padding: 10px 20px 20px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.menu-search-container .buscador-lateral {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 1em;
+  color: #222;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.menu-search-container .icono-lupa-lateral {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.2em;
+  pointer-events: none;
+}
+
+.account-links-mobile {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.account-links-mobile .menu-link-mobile {
+    font-size: 1.3em;
+    color: #222;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+.account-links-mobile .menu-link-mobile i {
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: #14442d;
+}
+
+/* ===== Lista de enlaces del menú lateral ===== */
+.menu-list {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.menu-list li {
+  margin-bottom: 15px;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.menu-list li a.menu-link {
+  color: #222;
+  text-decoration: none;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 1.3em;
+  transition: color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.menu-list li a.menu-link:hover,
+.menu-list li a.menu-link:active {
+  color: #9b1c10;
+  background-color: #fff9db;
+  transform: translateX(5px);
+}
+
+.menu-list li a.menu-link i {
+  margin-right: 10px;
+  font-size: 1.2em;
+  color: #14442d;
+}
+
+.menu-list li a.menu-link.menu-inicio i {
+  color: #1c2130;
+}
+
+/* ===== Pie del menú hamburguesa ===== */
+.menu-footer {
+  background: #5a1a0a;
+  color: #fff;
+  padding: 18px 10px 10px 10px;
+  font-size: 0.95em;
+}
+
+.footer-columns {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.footer-title {
+  font-weight: normal;
+  font-size: 1em;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.footer-columns ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-columns li {
+  margin-bottom: 4px;
+  font-size: 0.95em;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.footer-bottom ul {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0 0;
+}
+
+.footer-bottom li {
+  margin-bottom: 2px;
+}
+
+/* ========================================================================= */
+/* ===== MEDIA QUERIES: ESTILOS PARA PANTALLAS PEQUEÑAS (MÓVIL) ===== */
+/* ========================================================================= */
+@media (max-width: 900px) {
+  /* Oculta los elementos del NAVBAR PRINCIPAL en móvil */
+  .navbar .titulo,
+  .navbar .buscador-container,
+  .navbar .iconos,
+  .navbar .iniciar-sesion {
+    display: none;
+  }
+
+  /* El botón de hamburguesa se mostrará de forma predeterminada */
+  .hamburger-btn {
+    display: block; /* Asegura que se muestre */
+  }
+
+  /* Ajustes del layout del navbar para móvil */
+  .navbar {
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+
+  .logo {
+    width: 80px;
+    margin: 0;
+  }
+}
+
+/* ========================================================================= */
+/* ===== MEDIA QUERIES: ESTILOS PARA PANTALLAS GRANDES (ESCRITORIO) ===== */
+/* ========================================================================= */
+@media (min-width: 901px) {
+  /* Oculta los elementos del menú lateral que solo son para móvil */
+  .menu-mobile-only {
+    display: none !important;
+  }
+
+  /* Ajusta el ancho y posición del menú para que sea un dropdown en desktop */
+  .hamburger-menu {
+    width: 280px; /* Ancho ajustado para desktop */
+    top: 65px; /* Aparece debajo del navbar, ajusta según la altura de tu navbar */
+    left: auto;
+    right: 20px; /* Posición a la derecha, al lado del icono de hamburguesa */
+    height: auto; /* Altura automática según el contenido */
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+    background: #ffffff; /* Fondo blanco */
+    border: 1px solid #ddd; /* Borde sutil */
+    transform: translateX(100%); /* Oculto inicialmente a la derecha */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Transición más suave */
+    opacity: 0; /* Inicialmente transparente */
+    overflow-y: hidden; /* **CAMBIO CLAVE: Oculta el scroll en escritorio** */
+  }
+
+  .hamburger-menu.active {
+    transform: translateX(0); /* Muestra el menú deslizándose */
+    opacity: 1; /* Lo hace visible */
+  }
+
+  /* Muestra el botón de cerrar en el menú de escritorio */
+  .hamburger-menu .close-btn {
+    display: block; /* Muestra el botón de cerrar */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.8em; /* Ajusta el tamaño de la X */
+    color: #555; /* Color más sutil */
+  }
+
+  .hamburger-menu .close-btn:hover {
+    color: #3d1107; /* Color al pasar el mouse */
+  }
+
+  /* Oculta el buscador y los enlaces de cuenta del menú en escritorio */
+  .menu-search-container,
+  .account-links-mobile {
+      display: none !important;
+  }
+
+  /* Ajusta los enlaces para que parezcan un dropdown, con padding y margen */
+  .menu-list {
+    padding: 10px 15px 0 15px; /* Padding ajustado */
+    flex: none; /* Elimina el flex-grow para que no ocupe todo el espacio */
+  }
+  
+  .menu-list li {
+    margin-bottom: 5px; /* Menos espacio entre ítems para un dropdown */
+  }
+
+  .menu-list li a.menu-link {
+    padding: 10px 12px; /* Padding de los enlaces */
+    font-size: 1.1em;
+    font-weight: 500; /* Un poco menos negrita */
+    color: #333; /* Color de texto más suave */
+  }
+
+  .menu-list li a.menu-link i {
+    color: #11603a; /* Cambia el color del ícono para que coincida con el tema */
+    font-size: 1.1em; /* Ajusta el tamaño del ícono */
+  }
+
+  .menu-list li a.menu-link:hover {
+    background-color: #f0f0f0; /* Fondo más claro al pasar el mouse */
+    color: #000;
+  }
+
+  /* Footer en escritorio: más compacto o estilizado si se incluye */
+  .menu-footer {
+    padding: 15px 15px;
+    background: #f8f8f8; /* Fondo más claro para el footer en desktop */
+    color: #555;
+    border-top: 1px solid #eee;
+    font-size: 0.85em;
+  }
+
+  .menu-footer .footer-columns {
+    flex-direction: column; /* Apila las columnas */
+    gap: 8px; /* Menos espacio entre ellas */
+  }
+
+  .menu-footer .footer-title {
+    font-size: 0.95em;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .menu-footer ul {
+    margin-bottom: 10px;
+  }
+
+  .menu-footer li {
+    margin-bottom: 2px;
+    color: #ffffff;
+  }
+
+  .menu-footer .footer-bottom {
+    margin-top: 8px;
+  }
+}
+
+/* Carrusel */
+.carousel {
+  width: 1700px;
+  max-width: 100%;
+  margin: 40px auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-item img {
+  max-width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(100%);
+  background-color: #6fcb9f;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.carousel-control-prev {
+  left: 10px;
+}
+
+.carousel-control-next {
+  right: 10px;
+}
+
+/* Productos */
+.productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  padding: 32px 24px;
+  background: #fff6db;
+}
+
+.inicio-producto {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.1), 0 1.5px 4px 0 rgba(0, 0, 0, 0.07);
+  padding: 22px 18px 18px 18px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.18s;
+  min-height: 420px;
+  position: relative;
+  border: 1.5px solid #f3e6c2;
+}
+
+.inicio-producto:hover {
+  box-shadow: 0 8px 32px 0 rgba(111, 203, 159, 0.18), 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px) scale(1.04);
+  border-color: #ffe082;
+}
+
+.inicio-producto img {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  margin-bottom: 18px;
+  margin-top: 8px;
+  display: block;
+}
+
+.nombre-producto {
+  font-size: 1.15em;
+  color: #1b3a2b;
+  font-weight: 700;
+  margin: 12px 0 8px 0;
+  line-height: 1.4;
+  font-family: "Montserrat", Arial, sans-serif;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-img-placeholder {
+  width: 170px;
+  height: 170px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin-bottom: 18px;
+  margin-top: 8px;
+}
+
+.precio {
+  color: #ff0000;
+  font-weight: 700;
+  font-size: 2em;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 rgba(29, 27, 27, 0.133)
+}
+
+.inicio-producto p {
+  font-size: 1.08em;
+  color: #222;
+  margin: 0 0 8px 0;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.3;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inicio-producto .btn {
+  margin-top: 10px;
+  background: #09532f;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 22px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: background 0.18s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.inicio-producto .btn:hover {
+  background: #20563d;
+}
+
+.ver-mas-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.btn-vermas {
+  background: #206d48;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-vermas:hover {
+  background: #46ae7d;
+}
+
+/* Botón flotante del chat */
+.chat-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: #0a5c34;
+  color: white;
+  font-size: 28px;
+  padding: 18px;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  border: none;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
+}
+
+.chat-btn:hover {
+  background: #159e65;
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(30,188,124,0.18);
+}
+
+/* Chatbox flotante mejorado */
+.chatbox-float {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 340px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(30,188,124,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  z-index: 1300;
+  display: flex;
+  flex-direction: column;
+  animation: chatbox-pop 0.35s cubic-bezier(.4,1.4,.6,1) both;
+  overflow: hidden;
+  transition: transform 0.32s cubic-bezier(.4,1.4,.6,1), opacity 0.32s;
+}
+
+@keyframes chatbox-pop {
+  0% { transform: scale(0.7) translateY(60px); opacity: 0; }
+  80% { transform: scale(1.04) translateY(-8px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.chatbox-float-closing {
+  transform: scale(0.7) translateY(60px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(.4,1.4,.6,1), opacity 0.32s;
+}
+
+.chatbox-header {
+  background: linear-gradient(90deg,#0b6a3d 0%, #19b77a 100%);
+  color: #fff;
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 1.05em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chatbox-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: color 0.2s;
+  margin-left: 10px;
+}
+
+.chatbox-close:hover {
+  color: #ffe082;
+}
+
+.chatbox-body {
+  padding: 14px 12px 10px 12px;
+  background: #f6fff7;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 80px;
+  max-height: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+
+.chatbox-message {
+  background: #e6f9ee;
+  color: #222;
+  border-radius: 12px 12px 12px 4px;
+  padding: 10px 14px;
+  font-size: 1em;
+  max-width: 85%;
+  margin-bottom: 4px;
+  box-shadow: 0 1px 4px rgba(30,188,124,0.06);
+  opacity: 0;
+  animation: chat-msg-in 0.35s cubic-bezier(.4,1.4,.6,1) forwards;
+}
+
+@keyframes chat-msg-in {
+  0% { transform: translateY(20px) scale(0.95); opacity: 0; }
+  80% { transform: translateY(-4px) scale(1.04); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.chatbox-message-bot {
+  align-self: flex-start;
+  background: #e6f9ee;
+  color: #1b3a2b;
+}
+
+.chatbox-message-user {
+  align-self: flex-end;
+  background: #d1f7e2;
+  color: #0a5c34;
+  border-radius: 12px 12px 4px 12px;
+}
+
+.chatbox-footer {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: transparent;
+  border-top: none;
+  gap: 8px;
+}
+
+.chatbox-footer input {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 0.98em;
+  background: rgba(255,255,255,0.95);
+  outline: none;
+  box-shadow: 0 1px 2px rgba(30,188,124,0.04);
+  transition: box-shadow 0.18s;
+}
+
+.chatbox-footer input:focus {
+  box-shadow: 0 2px 8px rgba(30,188,124,0.10);
+}
+
+.chatbox-send {
+  background: #19b77a;
+  border: none;
+  color: #fff;
+  border-radius: 18px;
+  width: 120px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.12s;
+}
+
+.chatbox-send:disabled {
+  background: #b8e7d2;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.chatbox-send:hover:not(:disabled) {
+  background: #139e5e;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .chatbox-float {
+    right: 8px;
+    bottom: 8px;
+    width: 98vw;
+    max-width: 98vw;
+  }
+}
+
+/* Estilos de desplazamiento */
+.inicio-scroll {
+  max-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #f4f2f2 #ffffff;
+}
+
+.inicio-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inicio-scroll::-webkit-scrollbar-thumb {
+  background: #c8c8c8;
+  border-radius: 4px;
+}
+
+.inicio-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Botones adicionales */
+.btn-cerrar-extra {
+  background: #0a5c34;
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(30,188,124,0.10);
+  margin: 0 auto;
+  display: block;
+}
+
+.btn-cerrar-extra:hover {
+  background: #159e65;
+  transform: scale(1.04);
+  box-shadow: 0 4px 16px rgba(30,188,124,0.18);
+}
+
+.cerrar-extra-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Modal add product */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1400;
+}
+.modal-box {
+  background: linear-gradient(180deg,#ffffff 0%, #f8fff7 100%);
+  border-radius: 14px;
+  padding: 18px 20px;
+  width: 540px;
+  max-width: 96vw;
+  box-shadow: 0 18px 50px rgba(12,42,20,0.18);
+  border: 1px solid rgba(10,92,52,0.06);
+  transform: translateY(10px) scale(0.98);
+  animation: modal-pop 360ms cubic-bezier(.2,.9,.3,1) both;
+  /* do not force huge min-height; allow internal scrolling */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-height: 80vh; /* limit modal height to viewport */
+  overflow: hidden; /* hide outer overflow; inner .modal-form will scroll */
+}
+.modal-box::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;border-top-left-radius:14px;border-top-right-radius:14px;background:linear-gradient(90deg,#0bb176,#0a5c34);opacity:0.06}
+.modal-box{position:relative}
+.modal-header { display:block; text-align:center; margin-bottom:12px; padding-top:6px }
+.modal-header h3 { margin:0; font-size:1.4rem; color:#0a5c34; font-weight:800 }
+.modal-close { position:absolute; right:18px; top:14px; background:#e74c3c; border:none; width:40px; height:40px; border-radius:50%; font-size:18px; cursor:pointer; box-shadow:0 6px 18px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:center; color:#fff }
+.modal-close:hover{transform:scale(1.05)}
+.modal-form label { display:block; margin-top:8px; font-weight:600; text-align:center }
+.modal-form input[type="text"], .modal-form input[type="number"], .modal-form textarea, .modal-form input[type="file"], .modal-form select {
+  width:88%; max-width:460px; padding:12px 14px; border-radius:12px; border:1px solid #e6e6e6; box-sizing:border-box; margin-top:6px; background:#fff; font-size:14px; color:#13331f; display:block; margin-left:auto; margin-right:auto
+}
+.modal-form textarea { min-height:120px }
+
+/* modal form container: center fields and keep uniform width */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  /* make the form scroll when content is too tall */
+  max-height: calc(80vh - 140px); /* reserve space for header and footer */
+  overflow-y: auto;
+}
+
+/* scrollbar for modal form */
+.modal-form::-webkit-scrollbar { width: 8px }
+.modal-form::-webkit-scrollbar-thumb { background: rgba(11,177,118,0.12); border-radius: 6px }
+.modal-form::-webkit-scrollbar-track { background: transparent }
+
+/* Ensure inputs that use the .modal-input class match the default modal input sizing/style */
+.modal-input {
+  width:88%;
+  max-width:460px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #e6e6e6;
+  box-sizing:border-box;
+  margin-top:6px;
+  background:#fff;
+  font-size:14px;
+  color:#13331f;
+  display:block;
+}
+.modal-input:focus { outline: none; box-shadow: 0 4px 14px rgba(11,177,118,0.10); border-color: #0bb176 }
+
+/* Default to single column so fields match Nombre */
+.modal-form > div { display:block }
+.modal-form > div > div { flex:unset }
+.modal-form .small { width:88%; max-width:460px }
+
+/* Row for small inputs (cantidad/stock) */
+.row-small { display:flex; gap:12px; justify-content:center; align-items:flex-start; width:88%; max-width:460px; margin:0 auto }
+.modal-input-small { width:160px; padding:10px 12px; border-radius:12px; border:1px solid #e6e6e6; background:#fff }
+
+/* File input look */
+.modal-form input[type="file"] { padding:8px }
+
+/* preview */
+.modal-form img{border-radius:10px; max-height:220px; object-fit:cover; display:block}
+/* Buttons inside modal */
+
+.btn-primary {
+  background: linear-gradient(90deg,#14c27f 0%, #0bb176 40%, #159e65 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 28px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(11,177,118,0.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(11,177,118,0.18) }
+
+.btn-secondary {
+  background: linear-gradient(90deg,#b80636 0%, #6c0c21 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 28px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(10,92,52,0.12);
+}
+.btn-secondary:hover { transform: translateY(-1px); opacity: 0.98 }
+
+@keyframes modal-pop {
+  0% { transform: translateY(18px) scale(.96); opacity: 0 }
+  60% { transform: translateY(-6px) scale(1.02); opacity: 1 }
+  100% { transform: translateY(0) scale(1); opacity: 1 }
+}
+
+
+/* Botón flotante para subir (visible solo para vendedores) */
+.up-btn {
+  position: fixed;
+  bottom: 28px;
+  right: 112px; /* un poco más pegado al botón de chat */
+  background: #0a5c34;
+  color: white;
+  /* Igual tamaño visual que .chat-btn */
+  font-size: 28px;
+  padding: 18px;
+  border-radius: 50%;
+  /* misma sombra para que parezcan iguales */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  border: none;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
+}
+
+.up-btn:hover {
+  background: #159e65;
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(30,188,124,0.18);
+}
+
+/* Ajuste responsive: evitar solapamiento en pantallas pequeñas */
+@media (max-width: 600px) {
+  .up-btn {
+    right: 80px; /* mueve ligeramente para no solaparse con el chat en móvil */
+    padding: 14px;
+    font-size: 22px;
+  }
+}

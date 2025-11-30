@@ -1,0 +1,249 @@
+/* Contenedor principal */
+.pedidos-container {
+  background: #f8f9f5;
+  padding: 2rem;
+  border-radius: 18px;
+  max-width: 1200px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.pedidos-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #004d25;
+  margin-bottom: 1.5rem;
+}
+
+/* Mensajes de error */
+.error {
+  color: #dc3545;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Tabla de pedidos */
+.pedidos-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  margin-bottom: 2rem;
+}
+
+.pedidos-table th, 
+.pedidos-table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 1rem;
+}
+
+.pedidos-table th {
+  background: #eef2e6;
+  color: #004d25;
+  font-weight: 600;
+}
+
+.pedidos-table tr:hover {
+  background: #f1f8f1;
+}
+
+/* Botones de acción en la tabla */
+.pedidos-table button {
+  margin: 0 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.15s;
+}
+
+.pedidos-table button:hover {
+  transform: scale(1.08);
+}
+
+.pedidos-table button:first-child {
+  background: #ffc107;
+  color: #000;
+}
+
+.pedidos-table button:last-child {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* Formulario */
+.pedido-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 500px;
+}
+
+.pedido-form input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.pedido-form button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.pedido-form button[type="submit"] {
+  background: #004d25;
+  color: #fff;
+}
+
+.pedido-form button[type="submit"]:hover {
+  transform: scale(1.08);
+  background: #006633;
+}
+
+.pedido-form button[type="button"] {
+  background: #ccc;
+  color: #000;
+}
+
+.pedido-form button[type="button"]:hover {
+  background: #999;
+}
+
+/* Detalle del pedido */
+.detalle-container {
+  background: #f8f9f5;
+  padding: 2rem;
+  border-radius: 18px;
+  max-width: 900px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.detalle-container h2 {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #004d25;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.detalle-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+  margin-bottom: 2rem;
+}
+
+.detalle-table th,
+.detalle-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid #e6e6e6;
+  font-size: 1rem;
+}
+
+.detalle-table th {
+  background: #eaf4ea;
+  color: #006633;
+  font-weight: 600;
+}
+
+.detalle-table tr:hover {
+  background: #f3f8f3;
+}
+
+.detalle-table button {
+  margin: 0 5px;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.15s;
+}
+
+.detalle-table button:hover {
+  transform: scale(1.07);
+}
+
+.detalle-table button:first-child {
+  background: #17a2b8;
+  color: #fff;
+}
+
+.detalle-table button:last-child {
+  background: #dc3545;
+  color: #fff;
+}
+
+/* Formulario de detalle */
+.detalle-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #fff;
+  padding: 1.2rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.detalle-form input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.detalle-form button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.detalle-form button[type="submit"] {
+  background: #006633;
+  color: #fff;
+}
+
+.detalle-form button[type="submit"]:hover {
+  transform: scale(1.07);
+  background: #00994d;
+}
+
+.detalle-form button[type="button"] {
+  background: #ccc;
+  color: #000;
+}
+
+.detalle-form button[type="button"]:hover {
+  background: #999;
+}

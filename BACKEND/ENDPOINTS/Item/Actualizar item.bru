@@ -1,0 +1,26 @@
+meta {
+  name: Actualizar item
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://127.0.0.1:8000/items/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "serial": "A12345",
+    "fecha_ingreso": "2025-08-10",
+    "fecha_salida": "2025-08-15",
+    "estado": false,
+    "precio": 1400.00,
+    "productos_id": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

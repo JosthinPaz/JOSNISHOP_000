@@ -1,0 +1,26 @@
+meta {
+  name: sss compra
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8000/compra
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "cliente_id": 1,
+    "correo": "josthinpaz2@gmail.com",
+    "productos": [
+      { "producto_id": 1, "cantidad": 2 },
+      { "producto_id": 3, "cantidad": 1 }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

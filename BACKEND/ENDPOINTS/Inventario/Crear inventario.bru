@@ -1,0 +1,23 @@
+meta {
+  name: Crear inventario
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:8000/inventarios/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "producto_id": 2,
+    "cantidad_actual": 100,
+    "fecha_actualizacion": "2025-08-10"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Actualizar categoria
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://127.0.0.1:8000/categorias/14
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Ropa perra",
+    "fecha_creacion": "2025-08-10",
+    "estado": true
+  }
+}
+
+settings {
+  encodeUrl: true
+}

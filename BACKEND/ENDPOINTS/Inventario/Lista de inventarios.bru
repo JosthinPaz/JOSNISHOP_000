@@ -1,0 +1,15 @@
+meta {
+  name: Lista de inventarios
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://127.0.0.1:8000/inventarios/
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

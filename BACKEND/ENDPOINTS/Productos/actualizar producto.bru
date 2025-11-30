@@ -1,0 +1,23 @@
+meta {
+  name: actualizar producto
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://127.0.0.1:8000/productos/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "else",
+    "categoria_id": 15,
+    "descripcion": "jsjsj"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

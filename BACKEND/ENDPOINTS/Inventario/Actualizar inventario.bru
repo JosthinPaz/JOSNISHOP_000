@@ -1,0 +1,23 @@
+meta {
+  name: Actualizar inventario
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://127.0.0.1:8000/inventarios/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "producto_id": 1,
+    "cantidad_actual": 80,
+    "fecha_actualizacion": "2025-08-11T09:30:00"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

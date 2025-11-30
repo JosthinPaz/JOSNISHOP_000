@@ -1,0 +1,23 @@
+meta {
+  name: Crear producto
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:8000/productos/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Ejemplo de productoaaaa",
+    "categoria_id": 14,
+    "descripcion": "Descripción opcional"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

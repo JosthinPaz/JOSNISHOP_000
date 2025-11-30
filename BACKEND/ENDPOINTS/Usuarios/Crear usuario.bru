@@ -1,0 +1,25 @@
+meta {
+  name: Crear usuario
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:8000/usuarios/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Juan Pérez",
+    "correo": "juan@example.com",
+    "contraseña": "123456",
+    "rol_id": 1,
+    "estado": true
+  }
+}
+
+settings {
+  encodeUrl: true
+}

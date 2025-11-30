@@ -1,0 +1,814 @@
+/* =============================
+    LAYOUT GENERAL
+============================= */
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #f8f9f5;
+  color: #333;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 2rem;
+  max-width: 100%;
+  margin: 0 auto;
+  transition: padding 0.3s ease;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #004d25;
+  margin-bottom: 2rem;
+  transition: font-size 0.3s ease;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  animation: slideDown 0.5s ease-out;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Estilos de scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+  border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* =============================
+    SIDEBAR
+============================= */
+
+.sidebar_panel {
+  width: 315px;
+  min-width: 250px;
+  background: #f1f1dd;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px solid #f2f2d6;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  background: #065c36;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.user-name,
+.user-role {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.user-role {
+  font-size: 1rem;
+  color: gray;
+}
+
+.status.online {
+  color: green;
+  font-size: 0.9rem;
+}
+
+/* Navigation menu */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 14px;
+  margin: 10px 0;
+  background: none;
+  border: none;
+  width: 100%;
+  color: #004d25;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 12px;
+}
+
+.menu-item svg {
+  width: 22px;
+  height: 22px;
+}
+
+.menu-item:hover {
+  background: #cde2cd;
+}
+
+.menu-item.active {
+  background: #004d25;
+  color: #fff;
+}
+
+.submenu {
+  margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #006633;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 10px;
+}
+
+.submenu-item:hover {
+  background: #d8e9d3;
+}
+
+.logout {
+  margin-top: auto;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logout:hover {
+  opacity: 0.8;
+}
+
+/* Hamburger menu for mobile */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2001;
+  width: 44px;
+  height: 44px;
+  background: #004d25;
+  border-radius: 8px;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================
+    TABLA Y BOTONES
+============================= */
+
+.table-container {
+  max-height: 500px;
+  overflow-x: auto;
+  overflow-y: auto;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  margin: 1.8rem auto;
+}
+
+/* Card wrapper to make header + table appear on the same white board (like screenshot) */
+.panel-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  padding: 16px;
+  margin: 1.2rem 0;
+}
+
+/* Scrollable area inside panel cards (used by Pedidos and other long lists) */
+.panel-card .panel-scroll {
+  max-height: calc(100vh - 260px); /* leave space for header, sidebar and spacing */
+  overflow-y: auto;
+  padding-right: 8px; /* avoid scrollbar overlapping content */
+}
+
+.panel-card .panel-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.panel-card .panel-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.12);
+  border-radius: 6px;
+}
+
+.custom-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 1rem;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e6e6e6;
+  text-align: left;
+}
+
+.custom-table th {
+  background: #f4f4f4;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.custom-table td:first-child,
+.custom-table th:first-child {
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.custom-table th:first-child {
+  background: #f4f4f4;
+  z-index: 11;
+}
+
+/* Botones */
+.btn-add,
+.btn-edit,
+.btn-delete,
+.btn-save,
+.perfil-btn {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: transform 0.15s, opacity 0.2s;
+}
+
+.btn-add {
+  background: #28a745;
+  color: white;
+}
+
+.btn-edit {
+  background: #ffc107;
+  color: black;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-save {
+  background: #004d25;
+  color: white;
+}
+
+.perfil-btn {
+  background: #21c97a;
+  color: #fff;
+}
+
+.btn-add:hover,
+.btn-edit:hover,
+.btn-delete:hover,
+.btn-save:hover,
+.perfil-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Action buttons container: inline, consistent sizing */
+.table-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.table-actions button {
+  min-width: 120px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================
+    MODAL
+============================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(0.95);
+  animation: modal-fade-in 0.3s forwards;
+  transition: transform 0.3s ease-in-out;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal h2 {
+  margin-bottom: 1.5rem;
+  color: #004d25;
+  font-size: 1.5rem;
+}
+
+.modal label {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+  flex-grow: 1;
+}
+
+/* =============================
+    RESPONSIVE DESIGN
+============================= */
+
+/* Media Query para pantallas pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar_panel {
+    position: fixed;
+    height: 100%;
+    left: -315px;
+    z-index: 2000;
+    box-shadow: none;
+  }
+
+  .sidebar_panel.open {
+    left: 0;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .hamburger {
+    display: flex;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .user-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .user-avatar {
+    margin: 0 0 0.5rem 0;
+  }
+
+  .logout {
+    margin-top: 2rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+}
+
+/* Media Query para pantallas muy pequeñas (hasta 480px) */
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .content {
+    padding: 0.5rem;
+  }
+  
+  .table-container {
+    margin: 1rem auto;
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .btn-add,
+  .btn-edit,
+  .btn-delete,
+  .btn-save,
+  .perfil-btn {
+    padding: 10px 14px;
+    font-size: 1rem;
+  }
+  
+  .modal h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Media Query para tabletas y escritorios pequeños (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar_panel {
+    min-width: 220px;
+    width: 280px;
+  }
+
+  .content {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Media Query para escritorios grandes */
+@media (min-width: 1025px) {
+  .layout {
+    flex-direction: row;
+  }
+
+  .sidebar_panel {
+    position: static;
+    left: 0;
+    box-shadow: none;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .content {
+    padding: 3rem;
+  }
+  
+  .modal-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+/* Ensure modal buttons have equal size and fill available space */
+.modal .modal-buttons button {
+  min-width: 140px;
+  padding: 12px 16px;
+  flex: 1 1 auto;
+}
+
+/* Form input / select consistent style */
+.form-input,
+select.form-input,
+input.form-input,
+textarea.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #d6d6d6;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* Small tweak for table action buttons to be visually consistent */
+.table-actions button {
+  min-width: 110px;
+}
+
+/* Role and status badges */
+.role-badge,
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.role-badge.vendedor {
+  background-color: #004d25;
+  color: white;
+  border: 1px solid #00351a;
+}
+
+.role-badge.cliente {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.role-badge.no-role {
+  background-color: #f5f5f5;
+  color: #757575;
+  border: 1px solid #e0e0e0;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+.status-badge.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+  font-weight: 600;
+}
+
+.status-badge.active::before {
+  content: "1";
+  background-color: #2e7d32;
+  color: white;
+  padding: 0 6px;
+  margin-right: 6px;
+  border-radius: 10px;
+}
+
+.status-badge.inactive {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+  font-weight: 600;
+}
+
+.status-badge.inactive::before {
+  content: "0";
+  background-color: #c62828;
+  color: white;
+  padding: 0 6px;
+  margin-right: 6px;
+  border-radius: 10px;
+}
+
+/* =============================
+    ESTILOS PARA DETALLES DE PEDIDO
+============================= */
+
+.detalle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f8f9f5;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  max-width: 900px;
+  width: 100%;
+  height: auto;
+  position: static;
+}
+
+.detalle-container h2 {
+  color: #004d25;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.detalle-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.detalle-table th,
+.detalle-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detalle-table th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.detalle-table tr:last-child td {
+  border-bottom: none;
+}
+
+.detalle-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+.detalle-table td button {
+  margin-right: 0.5rem;
+}
+
+.detalle-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.detalle-form input {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.detalle-form button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.detalle-form .btn-save {
+  background-color: #004d25;
+}
+
+.detalle-form .btn-save:hover {
+  background-color: #006633;
+}
+
+.detalle-form .btn-cancel {
+  background-color: #dc3545;
+}
+
+.detalle-form .btn-cancel:hover {
+  background-color: #c82333;
+}
+
+.actions-bottom {
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-back {
+  padding: 0.8rem 2rem;
+  background-color: #4db42a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-back:hover {
+  background-color: #206e19;
+}
+
+/* =============================
+    RESPONSIVE DESIGN (DETALLES)
+============================= */
+
+@media (max-width: 768px) {
+  .detalle-container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  
+  .detalle-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .detalle-table {
+    min-width: 600px; /* Permite desplazamiento horizontal en pantallas pequeñas */
+  }
+
+  .detalle-table th,
+  .detalle-table td {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .detalle-form {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,23 @@
+meta {
+  name: crear categoria
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:8000/categorias/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "juan",
+    "fecha_creacion": "2025-08-10",
+    "estado": true
+  }
+}
+
+settings {
+  encodeUrl: true
+}

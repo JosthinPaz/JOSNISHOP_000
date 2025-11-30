@@ -1,0 +1,340 @@
+/* ============================================================
+   ANIMACIONES ESPECÍFICAS PARA PRODUCTOS Y COMPONENTES
+   ============================================================ */
+
+/* ANIMACIONES PARA CARDS DE PRODUCTOS */
+.product-card {
+  animation: slideUp 0.6s ease-out;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              filter 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 184, 107, 0.2);
+  filter: brightness(1.05);
+}
+
+/* STAGGER EFFECT PARA LISTAS DE PRODUCTOS */
+.product-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.product-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.product-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.product-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.product-card:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.product-card:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.product-card:nth-child(n+7) {
+  animation-delay: 0.35s;
+}
+
+/* ANIMACIONES PARA IMÁGENES DE PRODUCTO */
+.product-image {
+  animation: fadeIn 0.8s ease-out;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1) rotate(1deg);
+}
+
+/* ANIMACIONES PARA BOTONES */
+.btn-add-cart, 
+.btn-comprar, 
+.btn-ver-detalles {
+  animation: slideUp 0.6s ease-out;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-add-cart:hover, 
+.btn-comprar:hover, 
+.btn-ver-detalles:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 184, 107, 0.3);
+}
+
+.btn-add-cart::before,
+.btn-comprar::before,
+.btn-ver-detalles::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-add-cart:active::before,
+.btn-comprar:active::before,
+.btn-ver-detalles:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* ANIMACIONES PARA INPUTS */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: slideUp 0.5s ease-out;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(0, 184, 107, 0.1);
+}
+
+/* ANIMACIONES PARA CARRITO */
+.carrito-item {
+  animation: slideRight 0.5s ease-out;
+  transition: all 0.3s ease;
+}
+
+.carrito-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ANIMACIONES PARA TOTALES */
+.resumen-total {
+  animation: slideUp 0.6s ease-out;
+}
+
+.resumen-total h3 {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* ANIMACIONES PARA NOTIFICACIONES/TOAST */
+.toast {
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast.error {
+  animation: shake 0.4s ease-out;
+}
+
+.toast.success {
+  animation: bounce 0.5s ease-out;
+}
+
+/* ANIMACIONES PARA MODALES DE TARJETA */
+.modal-card {
+  animation: scaleUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tarjeta-form {
+  animation: slideUp 0.5s ease-out;
+}
+
+/* ANIMACIONES PARA ELEMENTOS DE LISTA */
+.list-item {
+  animation: slideLeft 0.5s ease-out;
+}
+
+.list-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.list-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.list-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.list-item:nth-child(n+4) {
+  animation-delay: 0.2s;
+}
+
+/* ANIMACIONES PARA CATEGORÍAS */
+.categoria-card {
+  animation: scaleUp 0.5s ease-out;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.categoria-card:hover {
+  transform: scale(1.05) translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ANIMACIONES PARA MENÚ DESPLEGABLE */
+.menu-desplegable {
+  animation: slideDown 0.4s ease-out;
+}
+
+/* ANIMACIONES PARA BADGES/NOTIFICADORES */
+.badge {
+  animation: heartbeat 1.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.badge.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ANIMACIONES PARA CARGA */
+.loader {
+  animation: rotate 1s linear infinite;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ANIMACIONES PARA SCROLL */
+@keyframes slideInOnScroll {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-on-scroll {
+  animation: slideInOnScroll 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* ANIMACIONES PARA TRANSICIONES DE PÁGINA */
+.page-enter {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.page-exit {
+  animation: fadeOut 0.3s ease-out;
+}
+
+/* ANIMACIONES SUAVE PARA LINKS */
+a {
+  position: relative;
+  text-decoration: none;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00b86b;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* ANIMACIONES PARA ICONOS */
+.icon {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.icon:hover {
+  transform: rotate(10deg) scale(1.2);
+}
+
+.icon.spin {
+  animation: rotate 2s linear infinite;
+}
+
+/* ANIMACIONES PARA PRECIO CON DESCUENTO */
+.price-original {
+  animation: fadeOut 0.4s ease-out;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.price-discount {
+  animation: scaleUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #e53935;
+  font-weight: 700;
+}
+
+/* ANIMACIONES PARA CONTADOR */
+.counter {
+  animation: slideUp 0.4s ease-out;
+}
+
+.counter-increment {
+  animation: pulse 0.5s ease-out;
+}
+
+/* ANIMACIONES PARA BÚSQUEDA */
+.search-input {
+  transition: all 0.3s ease;
+  animation: slideDown 0.4s ease-out;
+}
+
+.search-input:focus {
+  box-shadow: 0 4px 12px rgba(0, 184, 107, 0.2);
+  transform: scale(1.05);
+}
+
+/* ANIMACIONES PARALLAX SUAVE */
+@keyframes parallax {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-50px);
+  }
+}
+
+.parallax-element {
+  animation: parallax 10s ease-in-out infinite;
+}
+
+/* SMOOTH SCROLL */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ANIMACIÓN PARA SCROLL AL TOPE */
+.scroll-to-top {
+  animation: slideUp 0.4s ease-out;
+}
+
+.scroll-to-top:hover {
+  animation: bounce 0.6s ease-in-out infinite;
+}

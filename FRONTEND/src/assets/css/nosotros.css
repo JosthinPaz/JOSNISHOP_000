@@ -1,0 +1,294 @@
+/* ===== Estilos del menú superior ===== */
+header {
+    background: #ffe082;
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+.logo {
+    width: 100px;
+    margin-right: 20px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.titulo {
+    font-size: 1.3em;
+    margin-right: 20px;
+    color: #111;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.titulo:hover {
+    color: #333;
+}
+
+.buscador-container {
+    position: relative;
+    display: inline-block;
+}
+
+.buscador {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 800px;
+    margin-right: 20px;
+    background: #fff9c4;
+    font-size: 1em;
+    color: #222;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.icono-lupa {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 1.3em;
+    pointer-events: none;
+}
+
+.iconos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.5em;
+}
+
+.iconos .fa-solid {
+    color: #1a3c1a;
+    margin-right: 5px;
+}
+
+.iniciar-sesion {
+    font-weight: bold;
+    color: #111;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.2s;
+}
+
+.iniciar-sesion:hover {
+    color: #333;
+}
+
+/* ===== Botón hamburguesa ===== */
+.hamburger-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #222;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+/* ===== Menú lateral hamburguesa oculto ===== */
+.hamburger-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-menu.active {
+    transform: translateX(0);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #222;
+    cursor: pointer;
+    margin: 20px 0 0 20px;
+    align-self: flex-start;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0 0 0 40px;
+    margin: 40px 0 0 0;
+    flex: 1;
+}
+
+.menu-list li {
+    font-size: 12px;
+    color: #222;
+    margin-bottom: 18px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    cursor: pointer;
+}
+
+.menu-list li a.menu-link {
+    color: #222;
+    text-decoration: none;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 2em;
+    transition: color 0.2s;
+    display: block;
+    padding: 8px 0;
+}
+
+.menu-list li a.menu-link:hover,
+.menu-list li a.menu-link:active {
+    color: #9b1c10;
+}
+
+.menu-inicio {
+    color: #1c2130;
+    font-weight: 500;
+}
+
+.menu-footer {
+    background: #5a1a0a;
+    color: #fff;
+    padding: 18px 10px 10px 10px;
+    font-size: 0.95em;
+}
+
+.footer-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.footer-title {
+    font-weight: normal;
+    font-size: 1em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.footer-columns ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-columns li {
+    margin-bottom: 4px;
+    font-size: 0.95em;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.footer-bottom ul {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0 0;
+}
+
+.footer-bottom li {
+    margin-bottom: 2px;
+}
+
+/* ===== Sección Nosotros estilo dividido y centrado ===== */
+.nosotros-section {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    margin-top: 0;
+}
+
+.nosotros-texto {
+    flex: 1;
+    background-color: #336442;
+    color: white;
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.titulo-nosotros {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.nosotros-texto p {
+    font-size: 1.2em;
+    max-width: 600px;
+    line-height: 1.8em;
+    margin-bottom: 20px;
+}
+
+.nosotros-imagen {
+    flex: 1;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nosotros-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===== Responsive para celulares ===== */
+@media (max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        max-width: 100vw;
+        padding: 0 10px;
+        width: 100vw;
+    }
+
+    .logo {
+        margin-right: 10px;
+        margin-left: 0;
+        width: 80px;
+    }
+
+    .iconos {
+        gap: 10px;
+        font-size: 1.2em;
+        margin-top: 10px;
+    }
+
+    .nosotros-section {
+        flex-direction: column;
+    }
+
+    .nosotros-texto {
+        padding: 40px 20px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .nosotros-imagen img {
+        height: auto;
+    }
+}

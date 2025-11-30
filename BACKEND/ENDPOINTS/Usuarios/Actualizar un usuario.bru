@@ -1,0 +1,25 @@
+meta {
+  name: Actualizar un usuario
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://127.0.0.1:8000/usuarios/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nombre": "Juan Actualizado",
+    "correo": "juan2@example.com",
+    "contraseña": "654321",
+    "rol_id": 1,
+    "estado": false
+  }
+}
+
+settings {
+  encodeUrl: true
+}

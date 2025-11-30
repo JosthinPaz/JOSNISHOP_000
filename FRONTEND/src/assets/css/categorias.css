@@ -1,0 +1,340 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #fffbe6;
+  }
+  
+  /* ===== Menú Superior ===== */
+  header {
+    background: #ffe082;
+    padding: 10px 0;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    flex-wrap: wrap;
+  }
+  
+  .logo {
+    width: 100px;
+    margin-right: 20px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  
+  .titulo {
+    font-size: 1.3em;
+    margin-right: 20px;
+    color: #111;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  
+  .titulo:hover {
+    color: #333;
+  }
+  
+  .buscador-container {
+    position: relative;
+    display: inline-block;
+    flex: 1 1 auto;
+    margin: 10px;
+  }
+  
+  .buscador {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 600px;
+    background: #fff9c4;
+    font-size: 1em;
+    color: #222;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  
+  .icono-lupa {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 1.3em;
+    pointer-events: none;
+  }
+  
+  .iconos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.5em;
+  }
+  
+  .iconos .fa-solid {
+    color: #1a3c1a;
+    margin-right: 5px;
+  }
+  
+  .iniciar-sesion {
+    font-weight: bold;
+    color: #111;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.2s;
+  }
+  
+  .iniciar-sesion:hover {
+    color: #333;
+  }
+  
+  .hamburger-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #222;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  
+  /* ===== Menú hamburguesa ===== */
+  .hamburger-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 2px 0 16px rgba(0,0,0,0.08);
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .hamburger-menu.active {
+    transform: translateX(0);
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #222;
+    cursor: pointer;
+    margin: 20px 0 0 20px;
+    align-self: flex-start;
+  }
+  
+  .menu-list {
+    list-style: none;
+    padding: 0 0 0 40px;
+    margin: 40px 0 0 0;
+    flex: 1;
+  }
+  
+  .menu-list li a.menu-link {
+    color: #222;
+    text-decoration: none;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 2em;
+    transition: color 0.2s;
+    display: block;
+    padding: 8px 0;
+  }
+  
+  .menu-list li a.menu-link:hover,
+  .menu-list li a.menu-link:active {
+    color: #9b1c10;
+  }
+  
+  .menu-inicio {
+    color: #1c2130;
+    font-weight: 500;
+  }
+  
+  .menu-footer {
+    background: #5a1a0a;
+    color: #fff;
+    padding: 18px 10px 10px 10px;
+    font-size: 0.95em;
+  }
+  
+  .footer-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .footer-title {
+    font-weight: normal;
+    font-size: 1em;
+    margin-bottom: 6px;
+    display: block;
+  }
+  
+  .footer-columns ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-columns li {
+    margin-bottom: 4px;
+    font-size: 0.95em;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+  
+  .footer-bottom ul {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0 0;
+  }
+  
+  .footer-bottom li {
+    margin-bottom: 2px;
+  }
+  
+  /* ===== Categorías ===== */
+  .contenedor {
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    background-color: #fda792;
+    border-radius: 20px;
+    max-width: 1200px;
+    margin: 40px auto;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .menu-lateral {
+    background-color: #fffbe6;
+    padding: 20px;
+    border-radius: 20px;
+    flex: 1 1 200px;
+    min-width: 180px;
+  }
+  
+  .menu-lateral ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-lateral li {
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .menu-lateral li.activo {
+    color: #56b47b;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .contenido {
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    flex: 3 1 600px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .columna {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .columna h3 {
+    margin-top: 0;
+    color: #111;
+    font-size: 16px;
+  }
+  
+  .columna p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* ===== Botón personalizado animado ===== */
+  .boton-contenedor {
+    text-align: center;
+    margin-top: -15px;
+  }
+  
+  .boton-contenedor a {
+    display: inline-block;
+    background: linear-gradient(135deg, #fb2e01, #ffe28a, #6fcb9f);
+    background-size: 200% 200%;
+    animation: moverBoton 6s ease infinite;
+    color: #000000;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .boton-contenedor a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
+  
+  @keyframes moverBoton {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  } 
+  
+  @media (max-width: 900px) {
+    .navbar {
+      flex-direction: column;
+      padding: 0 10px;
+      height: auto;
+      width: 100%;
+      overflow-y: auto;
+    }
+  
+    .logo {
+      margin-right: 10px;
+      width: 80px;
+    }
+  
+    .iconos {
+      gap: 10px;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  
+    .contenedor {
+      flex-direction: column;
+      padding: 20px;
+    }
+  
+    .contenido {
+      flex-direction: column;
+    }
+  }
+  

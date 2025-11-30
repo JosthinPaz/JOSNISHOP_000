@@ -1,0 +1,33 @@
+[tool.black]
+line-length = 88
+target-version = ['py312']
+exclude = '''
+/(
+    \.git
+    |\.venv
+    |__pycache__
+    |migraciones
+    |ENDPOINTS
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+known_first_party = ["controllers", "db", "dtos", "models"]
+skip = ["migraciones", "ENDPOINTS", "__pycache__"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "migraciones",
+    "ENDPOINTS"
+]
+select = ["E", "F", "W", "I"]
+fix = true

@@ -1,0 +1,262 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+                            /* MENÚ */
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffe28a;
+  padding: 15px 25px;
+}
+
+.hamburger {
+  font-size: 25px;
+  cursor: pointer;
+  color: #123d24;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.logo img {
+  height: 80px;
+  margin-right: 10px;
+}
+
+.categorias {
+  margin-left: 20px;
+  font-size: 25px;
+  color: #123d24;
+  text-decoration: none;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+  background-color: #fff6db;
+  border-radius: 25px;
+  padding: 10px 15px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.search-bar i {
+  font-size: 20px;
+  color: #123d24;
+  cursor: pointer;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-icons a {
+  text-decoration: none;
+  color: #123d24;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* PRODUCTO */
+    .producto-container {
+      display: flex;
+      max-width: 1500px;
+      margin: 40px auto;
+      gap: 20px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .producto-imagen img {
+      width: 300px;
+      border-radius: 8px;
+    }
+
+    .producto-info {
+      flex: 1;
+    }
+
+    .producto-info h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .precio {
+      color: #FB2E01;
+      font-size: 28px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .estrellas {
+      color: gold;
+      font-size: 20px;
+      margin: 0px 0;
+
+    }
+
+
+    .detalle {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .lateral {
+      border-left: 1px solid #eee;
+      padding-left: 20px;
+      width: 250px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .lateral p {
+      margin: 8px 0;
+    }
+
+    .comprar-btn {
+      background: #FB2E01;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .comprar-btn:hover {
+      background: #AF2000;
+    }
+
+
+
+/* ===== Carrusel ===== */
+.carousel {
+  width: 1700px;         /* Ancho fijo para escritorio */
+  max-width: 100%;       /* Que se adapte a pantallas pequeñas */
+  margin: 40px auto;     /* Centrado */
+  overflow: hidden;
+  position: relative;    /* 🔥 importante para que los botones se posicionen dentro */
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 100%;       
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-item img {
+  max-width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;                          /* Centrado vertical */
+  transform: translateY(100%);       /* Ajuste perfecto */
+  background-color: #6FCB9F;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.carousel-control-prev {             /* distancia de las imagenes al moverse */
+  left: 10%;
+}
+
+.carousel-control-next {             /* distancia de las imagenes al moverse */
+  right: 10%;
+}
+ 
+
+/* ===== Videos ===== */
+
+.videos-btn {
+  background:#6FCB9F;
+  color: #fff;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.videos-btn:hover {
+  background: #AF2000;
+}
+
+.videos-container {
+  display: none; /* 🔥 oculto por defecto */
+  margin-top: 20px;
+  display: flex;
+  gap: 100px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.videos-container video {
+  width: 400px;     /* 🔥 formato vertical */
+  height: 750px;    /* estilo TikTok */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  object-fit: cover;
+}
+
+/* ===== Reseñas ===== */
+.resena-card {
+  background: #f8fff6;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 4px rgba(30,188,124,0.06);
+}
+.resena-card strong {
+  color: #0a5c34;
+}
+.resena-card span {
+  margin-left: 8px;
+  color: #f7b500;
+}
+.resena-card p {
+  margin: 6px 0 2px 0;
+}
+.resena-card small {
+  color: #888;
+}

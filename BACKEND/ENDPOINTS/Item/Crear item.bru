@@ -1,0 +1,26 @@
+meta {
+  name: Crear item
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:8000/items/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "serial": "A12345",
+    "fecha_ingreso": "2025-08-10",
+    "fecha_salida": null,
+    "estado": true,
+    "precio": 1500.50,
+    "productos_id": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+}

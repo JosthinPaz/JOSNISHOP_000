@@ -32,11 +32,10 @@ const Categorias: React.FC = () => {
   const [filterEstado, setFilterEstado] = useState<boolean | "">("");
 
   useEffect(() => {
+    const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
     const fetchCategorias = async () => {
       try {
-        const res = await axios.get<Categoria[]>(
-          "http://localhost:8000/categorias"
-        );
+        const res = await axios.get<Categoria[]>(`${API}/categorias`);
         setCategorias(res.data);
         setFilteredCategorias(res.data);
       } catch (err) {
@@ -94,7 +93,7 @@ const Categorias: React.FC = () => {
     try {
       if (editCategoria) {
         const res = await axios.put<Categoria>(
-          `http://localhost:8000/categorias/${editCategoria.id}`,
+          `${API}/categorias/${editCategoria.id}`,
           { nombre, estado }
         );
         setCategorias(
@@ -102,7 +101,7 @@ const Categorias: React.FC = () => {
         );
       } else {
         const res = await axios.post<Categoria>(
-          "http://localhost:8000/categorias",
+          `${API}/categorias`,
           {
             nombre,
             estado,
@@ -123,7 +122,7 @@ const Categorias: React.FC = () => {
   const confirmDeleteCategoria = async () => {
     if (deleteConfirm === null) return;
     try {
-      await axios.delete(`http://localhost:8000/categorias/${deleteConfirm}`);
+      await axios.delete(`${API}/categorias/${deleteConfirm}`);
       setCategorias(categorias.filter((c) => c.id !== deleteConfirm));
       showToast("Categoría eliminada correctamente", "success");
     } catch (err) {

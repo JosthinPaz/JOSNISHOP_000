@@ -57,7 +57,7 @@ const Login: React.FC = () => {
             localStorage.removeItem("userRole");
           }
           localStorage.setItem("role", String(data2.rol_id));
-          localStorage.setItem("token", data2.token ? data2.token : "logueado");
+          localStorage.setItem("token", data2.access_token ? data2.access_token : "logueado");
           setTimeout(() => navigate("/panel"), 1500);
         } else {
           showToast(data2.detail || "Error al iniciar sesión tras reactivar.", "error");
@@ -115,7 +115,7 @@ const Login: React.FC = () => {
           localStorage.removeItem("userRole");
         }
         localStorage.setItem("role", String(data.rol_id));
-        localStorage.setItem("token", data.token ? data.token : "logueado");
+        localStorage.setItem("token", data.access_token ? data.access_token : "logueado");
         setTimeout(() => navigate("/panel"), 1500);
       } else {
         const intentosRestantes = MAX_INTENTOS - (intentosFallidos + 1);

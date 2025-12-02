@@ -19,9 +19,8 @@ const ModaHombre: React.FC = () => {
   useEffect(() => {
     async function fetchProductos() {
       try {
-        const res = await fetch(
-          "http://localhost:8000/productos/categoria/modaHombre/rich"
-        );
+        const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
+        const res = await fetch(`${API}/productos/categoria/modaHombre/rich`);
         if (!res.ok) throw new Error("Error al obtener productos");
         const data = await res.json();
         setProductos(
@@ -30,11 +29,11 @@ const ModaHombre: React.FC = () => {
             let imgUrl: string | null = null;
             if (p.image) {
               const v = String(p.image).trim();
-              if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
-                imgUrl = v;
-              } else {
-                imgUrl = `http://localhost:8000${v}`;
-              }
+                if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
+                  imgUrl = v;
+                } else {
+                  imgUrl = `${API}${v}`;
+                }
             }
             return {
               id: p.id,

@@ -36,10 +36,27 @@ export default function ChatBot(){
     setLoading(true)
 
     try{
-      const userId = Number(localStorage.getItem('userId')) || null
-      const res = await fetch('http://localhost:8000/bot/respond', {
+      const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
+      const token = localStorage.getItem('token') || ''
+      // Try to recover userId from token payload if it's missing in localStorage
+      let userId = Number(localStorage.getItem('userId')) || null
+      if (!userId && token) {
+        try{
+          const payloadBase = token.split('.')[1];
+          const decoded = JSON.parse(decodeURIComponent(escape(window.atob(payloadBase))));
+          if (decoded && decoded.id) {
+            userId = Number(decoded.id) || null
+            if (userId) localStorage.setItem('userId', String(userId))
+          }
+        }catch(e){
+          // ignore
+        }
+      }
+      const headers: any = { 'Content-Type': 'application/json' }
+      if (token) headers['Authorization'] = `Bearer ${token}`
+      const res = await fetch(`${API}/bot/respond`, {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
+        headers,
         body: JSON.stringify({ usuario_origen: userId, mensaje: userMsg, history })
       })
       if (!res.ok) {
@@ -64,7 +81,7 @@ export default function ChatBot(){
           setWaUrl(data.whatsapp_url)
         } else {
           try{
-            const res2 = await fetch('http://localhost:8000/bot/wa')
+            const res2 = await fetch(`${API}/bot/wa`)
             const d2 = await res2.json()
             setWaUrl(d2.whatsapp_url || null)
             setWaPhone(d2.phone || null)
@@ -76,7 +93,8 @@ export default function ChatBot(){
       } else {
         setWaUrl(null)
       }
-    }catch{
+    }catch(err){
+      console.error('Error enviando mensaje al bot:', err)
       setMessages(m=>[...m, {from:'bot', text: 'Error de conexión al bot.'}])
     } finally {
       setLoading(false)

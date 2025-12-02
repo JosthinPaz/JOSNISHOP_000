@@ -51,11 +51,12 @@ const Productos: React.FC = () => {
   const [filterCategoriaId, setFilterCategoriaId] = useState<number | "">("");
 
   useEffect(() => {
+    const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
     const fetchData = async () => {
       try {
         const [prodRes, catRes] = await Promise.all([
-          axios.get<Producto[]>("http://localhost:8000/productos"),
-          axios.get<Categoria[]>("http://localhost:8000/categorias")
+          axios.get<Producto[]>(`${API}/productos`),
+          axios.get<Categoria[]>(`${API}/categorias`)
         ]);
         setProductos(prodRes.data);
         setFilteredProductos(prodRes.data);
@@ -118,7 +119,7 @@ const Productos: React.FC = () => {
     try {
       if (editProducto) {
         const res = await axios.put<Producto>(
-          `http://localhost:8000/productos/${editProducto.id}`,
+          `${API}/productos/${editProducto.id}`,
           { nombre, descripcion, categoria_id: categoriaId, estado, precio }
         );
         setProductos(
@@ -134,12 +135,12 @@ const Productos: React.FC = () => {
         if (imagenFile) form.append('imagen', imagenFile);
         if (videoFile) form.append('video', videoFile);
         const resUpload = await axios.post<{ producto_id: number }>(
-          "http://localhost:8000/upload/producto",
+          `${API}/upload/producto`,
           form,
           { headers: { 'Content-Type': 'multipart/form-data' } }
         );
         // Obtener el producto recien creado
-        const newProd = await axios.get<Producto>(`http://localhost:8000/productos/${resUpload.data.producto_id}`);
+        const newProd = await axios.get<Producto>(`${API}/productos/${resUpload.data.producto_id}`);
         setProductos([...productos, newProd.data]);
       }
       cerrarModal();
@@ -155,7 +156,7 @@ const Productos: React.FC = () => {
   const confirmDeleteProducto = async () => {
     if (deleteConfirm === null) return;
     try {
-      await axios.delete(`http://localhost:8000/productos/${deleteConfirm}`);
+      await axios.delete(`${API}/productos/${deleteConfirm}`);
       setProductos(productos.filter((p) => p.id !== deleteConfirm));
       showToast("Producto eliminado correctamente", "success");
     } catch (err) {

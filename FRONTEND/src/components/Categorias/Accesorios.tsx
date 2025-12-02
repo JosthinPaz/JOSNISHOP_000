@@ -19,9 +19,8 @@ const Accesorios: React.FC = () => {
   useEffect(() => {
     async function fetchProductos() {
       try {
-        const res = await fetch(
-          "http://localhost:8000/productos/categoria/accesorios/rich"
-        );
+        const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
+        const res = await fetch(`${API}/productos/categoria/accesorios/rich`);
         if (!res.ok) throw new Error("Error al obtener productos");
         const data = await res.json();
         setProductos(
@@ -33,7 +32,7 @@ const Accesorios: React.FC = () => {
               if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
                 imgUrl = v;
               } else {
-                imgUrl = `http://localhost:8000${v}`;
+                imgUrl = `${API}${v}`;
               }
             }
             return {

@@ -49,25 +49,41 @@ const ProductoDetalle: React.FC = () => {
   useEffect(() => {
     if (!productoId) return;
     (async () => {
+      // Get api base from environment (Vite). If not set, default to backend address.
+      const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
       try {
-        // Get api base from environment (Vite). If not set, use relative paths.
-        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
         // fetch basic producto
-        const res = await fetch(`${API || ''}/productos/${productoId}`);
+        const res = await fetch(`${API}/productos/${productoId}`);
         if (res.ok) {
-          const data = await res.json();
-          setProducto(data);
+          // Try parse JSON only if response is JSON
+          const ct = res.headers.get('content-type') || '';
+          let data: any = null;
+          if (ct.includes('application/json')) {
+            data = await res.json();
+            setProducto(data);
+            console.debug('Producto data:', data);
+          } else {
+            const text = await res.text();
+            console.error('Producto endpoint returned non-JSON:', text);
+          }
         }
       } catch (err) {
         console.error("Error cargando producto", err);
       }
 
       try {
-        const res2 = await fetch(`${API || ''}/productos/rich`);
+        const res2 = await fetch(`${API}/productos/rich`);
         if (res2.ok) {
-          const list: ProductoRich[] = await res2.json();
+          const ct2 = res2.headers.get('content-type') || '';
+          let list: ProductoRich[] = [];
+          if (ct2.includes('application/json')) {
+            list = await res2.json();
+          } else {
+            const text = await res2.text();
+            console.error('productos/rich returned non-JSON:', text);
+          }
           const found = list.find((p) => p.id === productoId);
-          if (found) {
+            if (found) {
             setPrecio(found.precio ?? null);
             // if found.image is absolute (http/https or protocol-relative //) use it as-is,
             // otherwise prefix with backend host for relative paths
@@ -81,6 +97,7 @@ const ProductoDetalle: React.FC = () => {
               }
             }
             setImg(imgUrl);
+            console.debug('Precio e imagen desde rich:', {precio: found.precio, imgUrl});
           }
         }
       } catch (err) {
@@ -88,12 +105,20 @@ const ProductoDetalle: React.FC = () => {
       }
       // fetch inventory for this product and compute available quantity
       try {
-        const invRes = await fetch(`${API || ''}/inventarios/reportes?producto_id=${productoId}`);
+        const invRes = await fetch(`${API}/inventarios/reportes?producto_id=${productoId}`);
         if (invRes.ok) {
-          const invList: InventarioItem[] = await invRes.json();
+          const ct3 = invRes.headers.get('content-type') || '';
+          let invList: InventarioItem[] = [];
+          if (ct3.includes('application/json')) {
+            invList = await invRes.json();
+          } else {
+            const text = await invRes.text();
+            console.error('inventarios/reportes returned non-JSON:', text);
+          }
           // invList is an array of inventories with `cantidad`
           const total = Array.isArray(invList) ? invList.reduce((s: number, it: InventarioItem) => s + (Number(it.cantidad) || 0), 0) : 0;
           setAvailableCount(total);
+          console.debug('Inventario para producto', productoId, invList, 'total', total);
         }
       } catch (e) {
         console.error('Error cargando inventario', e);

@@ -57,7 +57,7 @@ const Inicio: React.FC = () => {
     // cargar categorias desde backend para el select
     (async () => {
       try {
-        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+        const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
         const res = await fetch(`${API || ''}/categorias/`);
         if (!res.ok) return;
         const data = await res.json();
@@ -84,9 +84,13 @@ const Inicio: React.FC = () => {
       if (vendedorId) formData.append('vendedor_id', String(vendedorId));
       if (formFile) formData.append('file', formFile);
 
-      const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+      const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
+      const token = localStorage.getItem('token') || '';
+      const headers: any = {};
+      if (token) headers.Authorization = `Bearer ${token}`;
       const res = await fetch(`${API || ''}/productos/full`, {
         method: 'POST',
+        headers,
         body: formData,
       });
       if (!res.ok) {
@@ -107,7 +111,7 @@ const Inicio: React.FC = () => {
       setShowAddModal(false);
       // Recargar productos sin recargar la página
       try {
-        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+        const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
         const res2 = await fetch(`${API || ''}/productos/rich`);
         if (res2.ok) {
           const data2 = await res2.json();
@@ -118,7 +122,7 @@ const Inicio: React.FC = () => {
               if (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('//')) {
                 imgUrl = v;
               } else {
-                const API2 = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+                const API2 = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
                 imgUrl = `${API2 || ''}${v}`;
               }
             }
@@ -156,11 +160,26 @@ const Inicio: React.FC = () => {
     setWhatsappUrl(null);
 
     try {
-      const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
-      const userId = Number(localStorage.getItem('userId')) || null;
+      const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
+      let userId = Number(localStorage.getItem('userId')) || null;
+      if (!userId && token) {
+        try {
+          const payloadBase = token.split('.')[1];
+          const decoded = JSON.parse(decodeURIComponent(escape(window.atob(payloadBase))));
+          if (decoded && decoded.id) {
+            userId = Number(decoded.id) || null;
+            if (userId) localStorage.setItem('userId', String(userId));
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+      const token = localStorage.getItem('token') || '';
+      const headers: any = { 'Content-Type': 'application/json' };
+      if (token) headers.Authorization = `Bearer ${token}`;
       const res = await fetch(`${API || ''}/bot/respond`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ usuario_origen: userId, mensaje: text, history })
       });
       if (!res.ok) throw new Error('Network response not ok');
@@ -183,7 +202,7 @@ const Inicio: React.FC = () => {
     let mounted = true;
     (async () => {
       try {
-        const API = (import.meta.env.VITE_API_URL ?? '').replace(/\/$/, '');
+        const API = (import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:8000').replace(/\/$/, '');
         const res = await fetch(`${API || ''}/bot/wa`);
         if (!res.ok) return;
         const d = await res.json();

@@ -1,8 +1,5 @@
 # Importamos la clase principal de FastAPI y el middleware de CORS.
-# FastAPI: La clase principal para crear la aplicación web.
 from fastapi import FastAPI
-# CORSMiddleware: Un componente que maneja las cabeceras CORS, permitiendo
-# que tu API sea accesible desde diferentes dominios, como el de tu frontend.
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
@@ -10,10 +7,15 @@ import re
 import urllib.parse
 from dotenv import load_dotenv  # Para cargar variables de entorno
 
+# --- Importaciones NECESARIAS para la Creación de Tablas (TEMPORAL) ---
+# Importamos los componentes de la DB y TODOS los modelos
+# para que Base.metadata.create_all() sepa qué tablas crear.
+from db.database import engine # Asume que 'engine' está aquí
+from db import Base # Asume que 'Base' está aquí
+from models import Categoria, Producto , Item ,Usuario ,Rol , Inventario, Pedido, DetallePedido ,Video, Notificacion,Chat,Reseña ,Pago
+# ------------------------------------------------------------------------
+
 # --- Importación de todos los enrutadores (routers) del proyecto ---
-# Cada línea importa un `router` de un archivo de controlador diferente.
-# Por convención, se les asigna un alias para evitar conflictos y mantener el código limpio.
-# Estos archivos contienen los endpoints específicos para cada recurso (ej., usuarios, productos).
 from controllers.categoria_controller import router as categoria_router
 from controllers.chat_controller import router as chat_router
 from controllers.detalle_pedido_controller import router as detalle_pedido_router
@@ -32,11 +34,21 @@ from api import compra
 from controllers.ventas_controller import router as ventas_router
 
 # --- Crear la instancia de la aplicación FastAPI ---
-# Esta es la línea que inicializa tu aplicación.
 app = FastAPI()
 
 # Cargar variables de entorno
 load_dotenv()
+
+# --- LÓGICA TEMPORAL PARA CREAR TABLAS DIRECTAMENTE ---
+try:
+    print("TEMPORAL: Intentando crear todas las tablas directamente...")
+    # Base.metadata conoce todos los modelos importados arriba y los crea en la DB.
+    Base.metadata.create_all(bind=engine)
+    print("TEMPORAL: Tablas creadas (si no existían).")
+except Exception as e:
+    print(f"TEMPORAL: Falló la creación de tablas con create_all: {e}")
+# ------------------------------------------------------
+
 
 # Asegurarse de que la carpeta 'static' y 'static/uploads' existan antes de montar
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -47,16 +59,14 @@ os.makedirs(uploads_dir, exist_ok=True)
 # Middleware to sanitize incoming static paths to avoid invalid Windows filenames
 @app.middleware("http")
 async def sanitize_static_path(request, call_next):
+    # ... (El código de middleware de path es el mismo)
     try:
         path = request.scope.get('path', '')
         # Only operate on static paths
         if path.startswith('/static/'):
-            # decode any percent-encoding
             decoded = urllib.parse.unquote(path)
-            # keep the /static/... prefix and sanitize only the final filename part
             prefix = '/static/'
             rel = decoded[len(prefix):]
-            # if there are subdirectories (e.g. uploads/...), keep them and only sanitize last segment
             last_slash = rel.rfind('/')
             if last_slash != -1:
                 dir_part = rel[: last_slash + 1]  # includes trailing '/'
@@ -64,18 +74,15 @@ async def sanitize_static_path(request, call_next):
             else:
                 dir_part = ''
                 file_part = rel
-            # sanitize filename (do NOT replace path separators)
             safe_file = re.sub(r'[<>:\\"|?*]', '_', file_part)
             safe = prefix + dir_part + safe_file
             if safe != decoded:
-                # update both path and raw_path (raw_path is bytes)
                 request.scope['path'] = safe
                 try:
                     request.scope['raw_path'] = safe.encode('utf-8')
                 except Exception:
                     pass
     except Exception:
-        # don't break the request on unexpected errors here
         pass
     return await call_next(request)
 
@@ -83,42 +90,35 @@ async def sanitize_static_path(request, call_next):
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # --- Configuración del middleware de CORS (SEGURIDAD) ---
-# Obtener orígenes permitidos desde variable de entorno
 allowed_origins_str = os.getenv(
     "ALLOWED_ORIGINS",  
     "http://localhost:5173,http://localhost:3000"
 )
 allowed_origins = [origin.strip() for origin in allowed_origins_str.split(",")]
 
-# En desarrollo, permitir localhost; en producción, ser más restrictivo
 environment = os.getenv("ENVIRONMENT", "development").lower()
 if environment == "production":
-    # En producción: SIN allow_credentials con allow_origins=["*"]
-    # Usar lista explícita de orígenes
     allow_credentials_cors = False
 else:
-    # En desarrollo: permitir credenciales
     allow_credentials_cors = True
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,  # Específico: NO usar "*" con credentials
+    allow_origins=allowed_origins,
     allow_credentials=allow_credentials_cors,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Explícito
-    allow_headers=["Content-Type", "Authorization"],  # Explícito
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 @app.middleware("http")
 async def add_security_headers(request, call_next):
     response = await call_next(request)
-    # Encabezados de seguridad
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    # CSP mejorada: permitir 'self' y recursos necesarios
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline'; "  # Para desarrollo, en prod sin inline
+        "script-src 'self' 'unsafe-inline'; "
         "style-src 'self' 'unsafe-inline'; "
         "img-src 'self' data: https:; "
         "font-src 'self'; "
@@ -139,15 +139,13 @@ app.include_router(chat_router)
 app.include_router(detalle_pedido_router)
 app.include_router(notificacion_router)
 app.include_router(resena_router, prefix="/api")
-app.include_router(compra.router)  # Nota: Se importa y se incluye de un módulo diferente.
+app.include_router(compra.router)
 app.include_router(pago_router)
 app.include_router(ventas_router)
 app.include_router(bot_router)
 app.include_router(bot_admin_router)
 
 # --- RUTA RAÍZ AÑADIDA PARA VISIBILIDAD DE DOCUMENTACIÓN ---
-# Esta ruta asegura que la API tenga una respuesta simple en la raíz
-# y ayuda a FastAPI/Swagger a cargar correctamente el esquema de documentación.
 @app.get("/", tags=["Healthcheck"])
 async def root():
     """Confirma que el servidor está activo y funcionando."""

@@ -1,4 +1,0 @@
-providers = ["python"]
-
-[setup]
-working_dir = "BACKEND"

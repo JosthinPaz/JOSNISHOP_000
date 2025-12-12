@@ -1,16 +1,29 @@
 import os
 import smtplib
 from email.message import EmailMessage
+from datetime import datetime
+from pathlib import Path
+
+try:
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail
+    _HAS_SENDGRID = True
+except Exception:
+    _HAS_SENDGRID = False
 
 
-def _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+def _send_message_smtp(remitente, username, password, smtp_server, smtp_port, msg):
     """Try sending via SMTP_SSL first, then fallback to STARTTLS on port 587.
+    Supports an optional `username` (some providers like SendGrid require username='apikey').
     Returns True on success, False on failure. Prints detailed errors for debugging.
     """
     # Try SSL (commonly port 465)
     try:
         with smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=20) as server:
-            server.login(remitente, password)
+            if username:
+                server.login(username, password)
+            else:
+                server.login(remitente, password)
             server.send_message(msg)
         return True
     except Exception as e_ssl:
@@ -22,13 +35,50 @@ def _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
             server.ehlo()
             server.starttls()
             server.ehlo()
-            server.login(remitente, password)
+            if username:
+                server.login(username, password)
+            else:
+                server.login(remitente, password)
             server.send_message(msg)
         return True
     except Exception as e_tls:
         print(f"[SMTP_STARTTLS] fallo: {e_tls} (server={smtp_server}:587)")
 
     return False
+
+
+def _send_via_sendgrid(remitente, to_email, subject, html_content, plain_text=''):
+    if not _HAS_SENDGRID:
+        print("[SENDGRID] sendgrid package no disponible")
+        return False
+    api_key = os.getenv('SENDGRID_API_KEY')
+    if not api_key:
+        print("[SENDGRID] SENDGRID_API_KEY no configurada")
+        return False
+    try:
+        message = Mail(from_email=remitente, to_emails=to_email, subject=subject, html_content=html_content, plain_text_content=plain_text)
+        sg = SendGridAPIClient(api_key)
+        resp = sg.send(message)
+        print(f"[SENDGRID] status={resp.status_code} To={to_email}")
+        return 200 <= resp.status_code < 300
+    except Exception as e:
+        print(f"[SENDGRID] fallo: {e}")
+        return False
+
+
+def _dump_email_to_file(msg, purpose='email'):
+    try:
+        base = Path(__file__).resolve().parents[1] / 'static' / 'email_dump'
+        base.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
+        filename = base / f"{purpose}_{timestamp}.eml"
+        with open(filename, 'wb') as f:
+            f.write(msg.as_bytes())
+        print(f"[EMAIL_DUMP] Guardado en {filename}")
+        return True
+    except Exception as e:
+        print(f"[EMAIL_DUMP] Error guardando email: {e}")
+        return False
 
 def enviar_alerta_stock(destinatario, producto, cantidad):
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
@@ -53,11 +103,17 @@ def enviar_alerta_stock(destinatario, producto, cantidad):
     msg['Subject'] = asunto
     msg['From'] = remitente
     msg['To'] = destinatario
-    # Use helper that attempts SSL then STARTTLS and logs errors
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    # Try SendGrid API first if configured
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, destinatario, asunto, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[ALERTA_STOCK] Correo enviado a {destinatario} | Producto: {producto}")
     else:
-        print(f"[ALERTA_STOCK] Error enviando correo a {destinatario}")
+        print(f"[ALERTA_STOCK] Error enviando correo a {destinatario} - volcando a disco")
+        _dump_email_to_file(msg, purpose='alerta_stock')
 
 def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None):
     """Envía el correo de confirmación de compra. Acepta opcionalmente `pdf_bytes` para adjuntar la factura."""
@@ -99,10 +155,16 @@ def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None)
     else:
         print(f'[CONFIRMACION_COMPRA] No se proporcionó pdf_bytes para el pedido {pedido_id}')
 
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, correo, asunto, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[CONFIRMACION_COMPRA] Correo enviado a {correo} | Pedido: {pedido_id}")
     else:
-        print(f"[CONFIRMACION_COMPRA] Error enviando correo a {correo}")
+        print(f"[CONFIRMACION_COMPRA] Error enviando correo a {correo} - volcando a disco")
+        _dump_email_to_file(msg, purpose='confirmacion_compra')
 
 def send_registration_email(to_email):
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
@@ -128,10 +190,16 @@ def send_registration_email(to_email):
     msg['From'] = remitente
     msg['To'] = to_email
 
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, to_email, subject, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[REGISTRATION] Correo de registro enviado a {to_email}")
     else:
-        print(f"[REGISTRATION] Error enviando correo de registro a {to_email}")
+        print(f"[REGISTRATION] Error enviando correo de registro a {to_email} - volcando a disco")
+        _dump_email_to_file(msg, purpose='registration')
 
 def enviar_alerta_resena(destinatario, producto, comentario, calificacion):
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
@@ -157,10 +225,16 @@ def enviar_alerta_resena(destinatario, producto, comentario, calificacion):
     msg['From'] = remitente
     msg['To'] = destinatario
 
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, destinatario, asunto, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[ALERTA_RESENA] Correo enviado a {destinatario} | Producto: {producto}")
     else:
-        print(f"[ALERTA_RESENA] Error enviando correo a {destinatario}")
+        print(f"[ALERTA_RESENA] Error enviando correo a {destinatario} - volcando a disco")
+        _dump_email_to_file(msg, purpose='alerta_resena')
 
 
 def enviar_respuesta_resena(destinatario, producto, respuesta_vendedor):
@@ -188,10 +262,16 @@ def enviar_respuesta_resena(destinatario, producto, respuesta_vendedor):
     msg['From'] = remitente
     msg['To'] = destinatario
 
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, destinatario, asunto, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[RESPUESTA_RESENA] Correo enviado a {destinatario} | Producto: {producto}")
     else:
-        print(f"[RESPUESTA_RESENA] Error enviando correo a {destinatario}")
+        print(f"[RESPUESTA_RESENA] Error enviando correo a {destinatario} - volcando a disco")
+        _dump_email_to_file(msg, purpose='respuesta_resena')
 
 
 def enviar_cambio_estado_pedido(correo, pedido_id, nuevo_estado):
@@ -219,10 +299,16 @@ def enviar_cambio_estado_pedido(correo, pedido_id, nuevo_estado):
     msg['From'] = remitente
     msg['To'] = correo
 
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, correo, asunto, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[ESTADO_PEDIDO] Correo enviado a {correo} | Pedido: {pedido_id} | Estado: {nuevo_estado}")
     else:
-        print(f"[ESTADO_PEDIDO] Error enviando correo a {correo} | Pedido: {pedido_id}")
+        print(f"[ESTADO_PEDIDO] Error enviando correo a {correo} | Pedido: {pedido_id} - volcando a disco")
+        _dump_email_to_file(msg, purpose='estado_pedido')
 
 
 def enviar_recuperacion_contrasena(destinatario, nueva_contrasena):
@@ -271,10 +357,16 @@ def enviar_recuperacion_contrasena(destinatario, nueva_contrasena):
 
     # Debug output to confirm function is used and message structure
     print(f"[ENVIAR_RECUPERACION] Para={destinatario} | Asunto={asunto} | SMTP={smtp_server}:{smtp_port}")
-    if _send_message_smtp(remitente, password, smtp_server, smtp_port, msg):
+    smtp_username = os.getenv('SMTP_USERNAME', '')
+    if os.getenv('SENDGRID_API_KEY'):
+        sent = _send_via_sendgrid(remitente, destinatario, asunto, html, texto)
+    else:
+        sent = _send_message_smtp(remitente, smtp_username, password, smtp_server, smtp_port, msg)
+    if sent:
         print(f"[ENVIAR_RECUPERACION] Enviado OK a {destinatario}")
     else:
-        print(f"[ENVIAR_RECUPERACION] Error enviando correo a {destinatario}")
+        print(f"[ENVIAR_RECUPERACION] Error enviando correo a {destinatario} - volcando a disco")
+        _dump_email_to_file(msg, purpose='recuperacion')
     # function finished
 
 

@@ -4,7 +4,7 @@ from email.message import EmailMessage
 
 def enviar_alerta_stock(destinatario, producto, cantidad):
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 
@@ -36,7 +36,7 @@ def enviar_alerta_stock(destinatario, producto, cantidad):
 def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None):
     """Envía el correo de confirmación de compra. Acepta opcionalmente `pdf_bytes` para adjuntar la factura."""
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 
@@ -83,7 +83,7 @@ def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None)
 
 def send_registration_email(to_email):
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 
@@ -114,7 +114,7 @@ def send_registration_email(to_email):
 
 def enviar_alerta_resena(destinatario, producto, comentario, calificacion):
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 
@@ -147,7 +147,7 @@ def enviar_alerta_resena(destinatario, producto, comentario, calificacion):
 def enviar_respuesta_resena(destinatario, producto, respuesta_vendedor):
     """Enviar correo al cliente cuando el vendedor responde su reseña."""
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 
@@ -180,7 +180,7 @@ def enviar_respuesta_resena(destinatario, producto, respuesta_vendedor):
 def enviar_cambio_estado_pedido(correo, pedido_id, nuevo_estado):
     """Enviar correo al cliente cuando cambie el estado de su pedido."""
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 
@@ -213,7 +213,7 @@ def enviar_cambio_estado_pedido(correo, pedido_id, nuevo_estado):
 def enviar_recuperacion_contrasena(destinatario, nueva_contrasena):
     """Envía el correo de recuperación de contraseña usando la plantilla mejorada."""
     remitente = os.getenv('SMTP_EMAIL', 'josnishop@gmail.com')
-    password = os.getenv('SMTP_PASSWORD', 'xzbd txnd hbwa ovjd')
+    password = os.getenv('SMTP_PASSWORD', 'uoth lcxb qbvf yixd')
     smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.getenv('SMTP_PORT', '465'))
 

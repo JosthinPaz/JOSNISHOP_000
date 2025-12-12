@@ -3,18 +3,63 @@ import smtplib
 from email.message import EmailMessage
 from datetime import datetime
 from pathlib import Path
+import base64 # Añadido aquí para usar en _send_via_sendgrid sin importar dentro de la función
 
 # Intentar importar SendGrid
 try:
     from sendgrid import SendGridAPIClient
+    # Aseguramos que todas las clases de SendGrid necesarias estén disponibles
     from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition
     _HAS_SENDGRID = True
 except ImportError:
-    # Este error debe ser manejado en el archivo requirements.txt/Pipfile para asegurar que se instale el paquete
     _HAS_SENDGRID = False
 
+# =========================================================================
+# 1. PLANTILLA HTML (MOVIDA AL INICIO PARA EVITAR 'name is not defined')
+# =========================================================================
 
-# --- UTILITIES DE BAJO NIVEL ---
+# Reusable HTML email template. The left colored stripe is red (#d32f2f).
+# Uses simple inline styles for better email client compatibility.
+HTML_EMAIL_TEMPLATE = """<!doctype html>
+<html>
+    <head>
+        <meta charset=\"utf-8\"> 
+        <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />
+    </head>
+    <body style=\"margin:0;padding:0;font-family:Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;background:#f3f4f6;color:#111827;\">
+        <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"padding:24px;\">
+            <tr>
+                <td align=\"center\"> 
+                    <table role=\"presentation\" width=\"680\" cellspacing=\"0\" cellpadding=\"0\" style=\"background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 6px 18px rgba(15,23,42,0.06);\">
+                        <tr>
+                            <td style=\"width:10px;background:#d32f2f;vertical-align:top;\">&nbsp;</td>
+                            <td style=\"padding:28px 36px;\">
+
+                                <h1 style=\"margin:6px 0 14px 0;font-size:22px;color:#0f1724;\">{title}</h1>
+                                <p style=\"margin:0 0 18px 0;color:#374151;font-size:15px;\">{intro}</p>
+
+                                <div style=\"background:#fafafa;border-radius:8px;padding:18px;margin:12px 0;border:1px solid #eef2f3;color:#1f2937;\">{content}</div>
+
+                                <div style=\"margin:20px 0; text-align:center;\">{button_html}</div>
+                                <div style=\"margin:10px 0 18px 0;color:#6b7280;font-size:14px;\">{footer}</div>
+
+                                <div style=\"border-top:1px solid #eef2f6;margin-top:20px;padding-top:18px;text-align:center;color:#9ca3af;font-size:13px;\">
+                                    <div>¿Necesitas ayuda? Contáctanos en <a href=\"mailto:soporte@josnishop.com\" style=\"color:#d32f2f;text-decoration:none;\">soporte@josnishop.com</a></div>
+                                    <div style=\"margin-top:8px;font-weight:600;color:#374151;\">¡Gracias por confiar en nosotros! &nbsp; <span style=\"display:block;font-size:12px;color:#9ca3af;\">JOSNISHOP</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>"""
+
+
+# =========================================================================
+# 2. UTILITIES DE BAJO NIVEL
+# =========================================================================
 
 def _send_message_smtp(remitente, username, password, smtp_server, smtp_port, msg):
     """Try sending via SMTP_SSL first, then fallback to STARTTLS on port 587.
@@ -74,7 +119,6 @@ def _send_via_sendgrid(remitente, to_email, subject, html_content, plain_text=''
         if attachments:
             for attachment_info in attachments:
                 # Codificar los bytes a base64 (requerido por SendGrid)
-                import base64
                 encoded_file = base64.b64encode(attachment_info['file_bytes']).decode()
                 
                 attachment = Attachment(
@@ -95,8 +139,9 @@ def _send_via_sendgrid(remitente, to_email, subject, html_content, plain_text=''
 
 
 def _dump_email_to_file(msg, purpose='email'):
-    # (Mantener esta función igual, es solo para debugging local)
+    """Guarda el contenido de un EmailMessage a un archivo .eml para debugging."""
     try:
+        # Busca el directorio 'static/email_dump' dos niveles arriba del archivo actual
         base = Path(__file__).resolve().parents[1] / 'static' / 'email_dump'
         base.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
@@ -109,26 +154,34 @@ def _dump_email_to_file(msg, purpose='email'):
         print(f"[EMAIL_DUMP] Error guardando email: {e}")
         return False
 
-# --- OBTENCIÓN CENTRALIZADA DE VARIABLES ---
+# =========================================================================
+# 3. OBTENCIÓN CENTRALIZADA DE VARIABLES
+# =========================================================================
 
-# Definir una función de utilidad para obtener variables
 def _get_email_settings():
     """Obtiene las variables de entorno necesarias. Devuelve None si faltan críticas."""
     settings = {
         'remitente': os.getenv('SMTP_EMAIL'),
         'password': os.getenv('SMTP_PASSWORD'),
         'smtp_server': os.getenv('SMTP_SERVER'),
-        'smtp_port': int(os.getenv('SMTP_PORT', '465')), # Mantener '465' como fallback de puerto, no de credenciales
-        'smtp_username': os.getenv('SMTP_USERNAME', os.getenv('SMTP_EMAIL', '')), # SMTP_USERNAME puede ser SMTP_EMAIL si no se especifica
+        'smtp_port': int(os.getenv('SMTP_PORT', '465')), # Puerto 465 por defecto para SSL
+        # SMTP_USERNAME puede ser el mismo que SMTP_EMAIL si no se especifica.
+        'smtp_username': os.getenv('SMTP_USERNAME', os.getenv('SMTP_EMAIL', '')),
         'sendgrid_api_key': os.getenv('SENDGRID_API_KEY')
     }
-    # Chequeo mínimo: Si no hay clave SendGrid, debe haber credenciales SMTP.
-    if not settings['sendgrid_api_key'] and (not settings['remitente'] or not settings['password'] or not settings['smtp_server']):
+    
+    # Chequeo mínimo: Si no hay clave SendGrid, debe haber credenciales SMTP completas.
+    has_smtp_creds = settings['remitente'] and settings['password'] and settings['smtp_server']
+    
+    if not settings['sendgrid_api_key'] and not has_smtp_creds:
         print("[EMAIL_SETUP] Faltan variables críticas (SMTP_EMAIL/PASSWORD/SERVER o SENDGRID_API_KEY).")
         return None
+        
     return settings
 
-# --- FUNCIONES DE ALTO NIVEL (USO) ---
+# =========================================================================
+# 4. FUNCIONES DE ALTO NIVEL (USO)
+# =========================================================================
 
 def enviar_alerta_stock(destinatario, producto, cantidad):
     settings = _get_email_settings()
@@ -160,7 +213,7 @@ def enviar_alerta_stock(destinatario, producto, cantidad):
     if sent:
         print(f"[ALERTA_STOCK] Correo enviado a {destinatario} | Producto: {producto}")
     else:
-        print(f"[ALERTA_STOCK] Error enviando correo a {destinatario}")
+        print(f"[ALERTA_STOCK] Error enviando correo a {destinatario} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='alerta_stock')
     return sent
@@ -193,12 +246,11 @@ def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None)
         }]
         print(f'[CONFIRMACION_COMPRA] PDF adjuntado: {filename} ({len(pdf_bytes)} bytes)')
 
-    # Prioridad SendGrid
+    # Prioridad SendGrid (maneja adjuntos en _send_via_sendgrid)
     if settings['sendgrid_api_key']:
-        # SendGrid necesita la lógica de adjuntos en la función _send_via_sendgrid
         sent = _send_via_sendgrid(settings['remitente'], correo, asunto, html, texto, attachments=attachments)
     else:
-        # SMTP
+        # SMTP (maneja adjuntos con EmailMessage)
         msg = EmailMessage()
         msg.set_content(texto)
         msg.add_alternative(html, subtype='html')
@@ -208,6 +260,7 @@ def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None)
 
         if pdf_bytes:
             try:
+                # El filename ya fue definido arriba
                 msg.add_attachment(pdf_bytes, maintype='application', subtype='pdf', filename=filename)
             except Exception as e:
                 print(f'[CONFIRMACION_COMPRA] Error adjuntando PDF a EmaiMessage: {e}')
@@ -217,12 +270,11 @@ def enviar_confirmacion_compra(correo, pedido_id, pdf_bytes=None, filename=None)
     if sent:
         print(f"[CONFIRMACION_COMPRA] Correo enviado a {correo} | Pedido: {pedido_id}")
     else:
-        print(f"[CONFIRMACION_COMPRA] Error enviando correo a {correo}")
+        print(f"[CONFIRMACION_COMPRA] Error enviando correo a {correo} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='confirmacion_compra')
     return sent
 
-# (Resto de funciones se limpian de valores quemados de la misma manera)
 
 def send_registration_email(to_email):
     settings = _get_email_settings()
@@ -253,7 +305,7 @@ def send_registration_email(to_email):
     if sent:
         print(f"[REGISTRATION] Correo de registro enviado a {to_email}")
     else:
-        print(f"[REGISTRATION] Error enviando correo de registro a {to_email}")
+        print(f"[REGISTRATION] Error enviando correo de registro a {to_email} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='registration')
     return sent
@@ -288,7 +340,7 @@ def enviar_alerta_resena(destinatario, producto, comentario, calificacion):
     if sent:
         print(f"[ALERTA_RESENA] Correo enviado a {destinatario} | Producto: {producto}")
     else:
-        print(f"[ALERTA_RESENA] Error enviando correo a {destinatario}")
+        print(f"[ALERTA_RESENA] Error enviando correo a {destinatario} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='alerta_resena')
     return sent
@@ -323,7 +375,7 @@ def enviar_respuesta_resena(destinatario, producto, respuesta_vendedor):
     if sent:
         print(f"[RESPUESTA_RESENA] Correo enviado a {destinatario} | Producto: {producto}")
     else:
-        print(f"[RESPUESTA_RESENA] Error enviando correo a {destinatario}")
+        print(f"[RESPUESTA_RESENA] Error enviando correo a {destinatario} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='respuesta_resena')
     return sent
@@ -358,7 +410,7 @@ def enviar_cambio_estado_pedido(correo, pedido_id, nuevo_estado):
     if sent:
         print(f"[ESTADO_PEDIDO] Correo enviado a {correo} | Pedido: {pedido_id} | Estado: {nuevo_estado}")
     else:
-        print(f"[ESTADO_PEDIDO] Error enviando correo a {correo} | Pedido: {pedido_id}")
+        print(f"[ESTADO_PEDIDO] Error enviando correo a {correo} | Pedido: {pedido_id} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='estado_pedido')
     return sent
@@ -414,10 +466,7 @@ def enviar_recuperacion_contrasena(destinatario, nueva_contrasena):
     if sent:
         print(f"[ENVIAR_RECUPERACION] Enviado OK a {destinatario}")
     else:
-        print(f"[ENVIAR_RECUPERACION] Error enviando correo a {destinatario}")
+        print(f"[ENVIAR_RECUPERACION] Error enviando correo a {destinatario} - volcando a disco")
         if not settings['sendgrid_api_key']:
             _dump_email_to_file(msg, purpose='recuperacion')
     return sent
-
-# (El template HTML_EMAIL_TEMPLATE permanece intacto al final del archivo)
-# ...

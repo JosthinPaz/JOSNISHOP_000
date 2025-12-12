@@ -62,7 +62,9 @@ def is_blocked(key):
 
 # Clase para la validación de la petición de recuperación de contraseña.
 class RecuperarRequest(BaseModel):
-    email: str
+    # Mantener la clase por compatibilidad en caso de uso interno,
+    # pero el endpoint acepta ahora tanto 'email' como 'correo' en el body.
+    email: Optional[str] = None
 
 # Email sending for password recovery is handled in `utils.email_utils.enviar_recuperacion_contrasena`
 
@@ -205,14 +207,19 @@ def login(user: UsuarioLogin, request: Request):
 
 ### 8. Recuperar contraseña (POST)
 @router.post("/recuperar-contrasena")
-def recuperar_contrasena(request: RecuperarRequest):
+def recuperar_contrasena(payload: dict = Body(...)):
+    # Aceptar tanto {"email": "..."} como {"correo": "..."}
+    email = payload.get("email") or payload.get("correo")
+    if not email:
+        raise HTTPException(status_code=422, detail=[{"type": "missing", "loc": ["body", "email"], "msg": "Field required", "input": payload}])
+
     db = SessionLocal()
-    usuario = db.query(Usuario).filter(Usuario.correo == request.email).first()
+    usuario = db.query(Usuario).filter(Usuario.correo == email).first()
     if not usuario:
         # Por seguridad, no se debe especificar si el correo existe o no.
         # Se envía una respuesta genérica para evitar enumerar usuarios.
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    
+
     # Genera una contraseña aleatoria de 8 caracteres.
     nueva_contrasena = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
     # Encripta la nueva contraseña antes de guardarla.
@@ -220,11 +227,11 @@ def recuperar_contrasena(request: RecuperarRequest):
     usuario.contraseña = hashed.decode('utf-8')
     db.commit()
     db.close()
-    
+
     # Envía el correo con la nueva contraseña temporal (usa plantilla central)
     # enviar_recuperacion_contrasena hace login con las credenciales en env
-    enviar_recuperacion_contrasena(request.email, nueva_contrasena)
-    
+    enviar_recuperacion_contrasena(email, nueva_contrasena)
+
     return {"msg": "Nueva contraseña enviada al correo"}
 
 

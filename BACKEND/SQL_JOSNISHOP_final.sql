@@ -7,7 +7,6 @@
 		(2, 'cliente', 1);
 
 	INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contraseña`, `rol_id`, `estado`) VALUES
-		(1, 'Josthin Paz', 'josthinpaz2@gmail.com', 'Josthin_10', 1, 1),
 		(2, 'María Gómez', 'Cherith1605@gmail.com', '123', 2, 1),
 		(3, 'Carlos Ruiz', 'carlos.ruiz@mail.com', 'cliente123', 2, 1),
 		(4, 'Laura Sánchez', 'laura.sanchez@mail.com', 'cliente123', 2, 1),

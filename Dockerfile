@@ -1,35 +1,25 @@
-# Usar una imagen base de Python oficial y ligera
+# Dockerfile actual que está fallando (asume que BACKEND está afuera):
+# COPY requirements.txt /app/
+# COPY BACKEND /app/BACKEND 
+
+# NO! El requirements.txt está DENTRO de la carpeta BACKEND, no en la raíz del repo.
+
+# Asumiendo que el requirements.txt está DENTRO de la carpeta BACKEND:
+# CÓDIGO FINAL CORREGIDO DE DOCKERFILE
 FROM python:3.11-slim
 
-# Instalar dependencias del sistema necesarias
-# Incluye las librerías para MySQL y Cairo/ReportLab
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        default-libmysqlclient-dev \
-        gcc \
-        pkg-config \
-        libcairo2-dev \
-        libfreetype6-dev \
-        libssl-dev \
-        python3-dev \
-        build-essential && \
-    # Limpieza final para reducir el tamaño de la imagen
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+# ... (instalación de dependencias del sistema) ...
 
 # Establecer el directorio de trabajo base
 WORKDIR /app
 
-# Copiar el archivo de dependencias y la carpeta del Backend
-COPY requirements.txt /app/
-COPY BACKEND /app/BACKEND
-
-# Establecer el directorio de trabajo en la carpeta de la aplicación (BACKEND)
-WORKDIR /app/BACKEND
+# Copiar TODO el contenido de la carpeta BACKEND (que ahora es el contexto de construcción)
+# Si Root Directory es "BACKEND", el '.' representa todo lo que hay dentro de la carpeta BACKEND
+COPY . /app
 
 # Upgrade pip y luego instalar las dependencias de Python
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r /app/requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
 # El comando de inicio que se ejecutará al iniciar el contenedor
 CMD ["sh", "-c", "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000"]

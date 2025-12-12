@@ -159,6 +159,7 @@ const Inicio: React.FC = () => {
 
     try {
       const { API } = await import('../config/api');
+      const token = localStorage.getItem('token') || '';
       let userId = Number(localStorage.getItem('userId')) || null;
       if (!userId && token) {
         try {
@@ -172,7 +173,6 @@ const Inicio: React.FC = () => {
           // ignore
         }
       }
-      const token = localStorage.getItem('token') || '';
       const headers: any = { 'Content-Type': 'application/json' };
       if (token) headers.Authorization = `Bearer ${token}`;
       const res = await fetch(`${API}/bot/respond`, {

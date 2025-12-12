@@ -459,8 +459,7 @@ const Ventas: React.FC = () => {
                       font: { size: 11 }
                     },
                     grid: {
-                      color: '#f0f0f0',
-                      drawBorder: false
+                      color: '#f0f0f0'
                     }
                   },
                   x: {

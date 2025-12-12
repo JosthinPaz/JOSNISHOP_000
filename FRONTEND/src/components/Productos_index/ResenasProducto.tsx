@@ -3,16 +3,24 @@ import axios from "axios";
 import { API } from '../../config/api';
 import "../../assets/css/producto_sele/Producto_selec.css";
 
+interface Resena {
+  id_resena: number;
+  usuario_nombre: string;
+  calificacion: number;
+  comentario: string;
+  fecha: string;
+}
+
 const ResenasProducto: React.FC<{ id_producto: number }> = ({ id_producto }) => {
-  const [resenas, setResenas] = useState([]);
+  const [resenas, setResenas] = useState<Resena[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
-      .get(`${API}/api/resenas/producto/${id_producto}`)
+      .get<Resena[]>(`${API}/api/resenas/producto/${id_producto}`)
       .then((res) => setResenas(res.data))
       .catch(() => setResenas([]))
-      .finally(() => setLoading(false));
+      .then(() => setLoading(false));
   }, [id_producto]);
 
   return (

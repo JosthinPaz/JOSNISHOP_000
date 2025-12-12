@@ -31,7 +31,7 @@ const categorias: { key: CategoriaKey; label: string }[] = [
   { key: "juguetes", label: "Juguetes" },
 ];
 
-const secciones: Record<CategoriaKey, JSX.Element> = {
+const secciones: Record<CategoriaKey, React.ReactNode> = {
   hogar: (
     <>
       <div className="columna">

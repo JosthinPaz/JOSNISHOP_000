@@ -6,7 +6,6 @@ import video from "../assets/IMG/inicio_video.mp4";
 import { useToast } from "../contexts/useToastContext";
 
 const Registro: React.FC = () => {
-  const SECRET_KEY = "Josnishop el mejor";
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",

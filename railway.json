@@ -17,8 +17,8 @@
       "project": "JOSNISHOP_000",
       "gitBasePath": "FRONTEND",
       "rootDirectory": "FRONTEND",
-      "buildCommand": "npm install",
-      "startCommand": "npm run dev"
+      "buildCommand": "npm install && npm run build", // <--- CORREGIDO
+      "startCommand": "npm run start" // <--- CORREGIDO
     }
   ]
 }

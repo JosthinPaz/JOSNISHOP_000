@@ -31,8 +31,8 @@ WORKDIR /app/BACKEND
 RUN pip install --no-cache-dir -r requirements.txt
 
 # El comando de inicio que se ejecutará al iniciar el contenedor
-# *** LÍNEA CORREGIDA: Creación de tablas gestionada por main.py, solo iniciamos Uvicorn. ***
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# *** LÍNEA RESTAURADA: Ahora usa Alembic para las migraciones. ***
+CMD ["sh", "-c", "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000"]
 
 # Exponer el puerto
 EXPOSE 8000

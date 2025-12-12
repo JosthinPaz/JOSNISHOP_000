@@ -1,6 +1,6 @@
 // Central API configuration for the frontend
-// Default to the production Railway URL unless overridden by VITE_API_URL at build time
-const RAILWAY_DEFAULT = 'josnishop000-backend-production.up.railway.app';
+// Default to the production Railway backend URL unless overridden by VITE_API_URL at build time
+const RAILWAY_DEFAULT = 'https://josnishop000-backend-production.up.railway.app';
 const base = (import.meta.env.VITE_API_URL ?? RAILWAY_DEFAULT).replace(/\/$/, '');
 export const API = base;
 export const STORAGE = (import.meta.env.VITE_STORAGE_URL ?? `${base}/storage`).replace(/\/$/, '');

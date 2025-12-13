@@ -156,7 +156,7 @@ const ProductoDetalle: React.FC = () => {
     navigate('/carrito');
   };
 
-  const items = [img || "/src/assets/IMG/index/carrusel1.png", "/src/assets/IMG/index/carrusel2.png", "/src/assets/IMG/index/carrusel3.png"];
+  const items = [img || "/JOSNISHOP_000/assets/IMG/index/carrusel1.png", "/JOSNISHOP_000/assets/IMG/index/carrusel2.png", "/JOSNISHOP_000/assets/IMG/index/carrusel3.png"];
 
   const goToSlide = (index: number) => {
     if (!innerRef.current) return;
@@ -189,12 +189,12 @@ const ProductoDetalle: React.FC = () => {
                 const target = e.currentTarget as HTMLImageElement;
                 if (!target.dataset.fallback) {
                   target.dataset.fallback = '1';
-                  target.src = '/src/assets/IMG/index/bolso.png';
+                  target.src = '/JOSNISHOP_000/assets/IMG/index/bolso.png';
                 }
               }}
             />
           ) : (
-            <img src="/src/assets/IMG/index/bolso.png" alt="producto" />
+            <img src="/JOSNISHOP_000/assets/IMG/index/bolso.png" alt="producto" />
           )}
         </div>
 
@@ -239,7 +239,7 @@ const ProductoDetalle: React.FC = () => {
       {showVideos && (
         <div id="videosContainer" className="videos-container">
           <video controls>
-            <source src="/src/assets/videos/index/bolso/video1.mp4" type="video/mp4" />
+            <source src="/JOSNISHOP_000/assets/videos/index/bolso/video1.mp4" type="video/mp4" />
             Tu navegador no soporta el video.
           </video>
         </div>

@@ -7,9 +7,9 @@ const ProductoAuricularesPro: React.FC = () => {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const items = [
-    "/src/assets/IMG/index/carrusel1.png",
-    "/src/assets/IMG/index/carrusel2.png",
-    "/src/assets/IMG/index/carrusel3.png",
+    "/JOSNISHOP_000/assets/IMG/index/carrusel1.png",
+    "/JOSNISHOP_000/assets/IMG/index/carrusel2.png",
+    "/JOSNISHOP_000/assets/IMG/index/carrusel3.png",
   ];
 
   // Carrusel
@@ -76,7 +76,7 @@ const ProductoAuricularesPro: React.FC = () => {
       {/* CONTENIDO PRINCIPAL */}
       <div className="producto-container">
         <div className="producto-imagen">
-          <img src="/src/assets/IMG/index/audifonos_deportivos.jpg" alt="Auriculares Pro" />
+          <img src="/JOSNISHOP_000/assets/IMG/index/audifonos_deportivos.jpg" alt="Auriculares Pro" />
         </div>
         <div className="producto-info">
           <h2>
@@ -154,7 +154,7 @@ const ProductoAuricularesPro: React.FC = () => {
       {showVideos && (
         <div id="videosContainer" className="videos-container">
           <video controls>
-            <source src="/src/assets/videos/index/audifonospro/video1.mp4" type="video/mp4" />
+            <source src="/JOSNISHOP_000/assets/videos/index/audifonospro/video1.mp4" type="video/mp4" />
             Tu navegador no soporta el video.
           </video>
         </div>

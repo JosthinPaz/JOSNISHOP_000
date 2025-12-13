@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 const VideosPage: React.FC = () => {
   // Lista de videos a mostrar
   const videos = [
-    "/src/assets/videos/app_intefaz/reloj_1.mp4",
-    "/src/assets/videos/app_intefaz/cafetera.mp4",
-    "/src/assets/videos/app_intefaz/bolso.mp4",
-    "/src/assets/videos/app_intefaz/perro.mp4",
-    "/src/assets/videos/app_intefaz/audifonos_1.mp4",
-    "/src/assets/videos/app_intefaz/lienzo.mp4",
-    "/src/assets/videos/app_intefaz/audifonos_2.mp4",
-    "/src/assets/videos/app_intefaz/set.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/reloj_1.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/cafetera.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/bolso.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/perro.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/audifonos_1.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/lienzo.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/audifonos_2.mp4",
+    "/JOSNISHOP_000/assets/videos/app_intefaz/set.mp4",
   ];
 
   // Lista de productos destacados
@@ -23,35 +23,35 @@ const VideosPage: React.FC = () => {
     {
       nombre: "Fitness Tracker, Reloj de Actividad",
       precio: "$69.990 COP",
-      imagen: "/src/assets/IMG/Index/reloj.png",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/reloj.png",
       descripcion: "Reloj inteligente para monitorear actividad física.",
       cantidad: 1, 
     },
     {
       nombre: "Cafetera con molinillo 15 Bar",
       precio: "$57.990 COP",
-      imagen: "/src/assets/IMG/Index/cafetera.png",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/cafetera.png",
       descripcion: "Cafetera profesional con molinillo integrado.",
       cantidad: 1,
     },
     {
       nombre: "Bolso de hombro para mujer",
       precio: "$102.639 COP",
-      imagen: "/src/assets/IMG/Index/bolso.png",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/bolso.png",
       descripcion: "Bolso elegante y espacioso para mujer.",
       cantidad: 1,
     },
     {
       nombre: "Chubasquero impermeable para perro",
       precio: "$19.779 COP",
-      imagen: "/src/assets/IMG/Index/perro.png",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/perro.png",
       descripcion: "Impermeable para perros, ideal para días lluviosos.",
       cantidad: 1,
     },
     {
       nombre: "Auriculares inalámbricos E6S",
       precio: "$19.699 COP",
-      imagen: "/src/assets/IMG/Index/audifonos.png",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/audifonos.png",
       descripcion: "Auriculares Bluetooth con estuche de carga.",
       cantidad: 1,
     },
@@ -59,14 +59,14 @@ const VideosPage: React.FC = () => {
     {
       nombre: "Lienzo Bastidor 12 X 18 Cm En Caballete En Madera 280g/m2",
       precio: "$17.990 COP",
-      imagen: "/src/assets/IMG/Index/lienzo.jpg",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/lienzo.jpg",
       descripcion: "Lienzo Bastidor 12 X 18 Cm En Caballete En Madera 280g/m2",
       cantidad: 1,
     },
     {
       nombre: "Audífonos Bluetooth Deportivos",
       precio: "$49.900 COP",
-      imagen: "/src/assets/IMG/Index/audifonos_deportivos.jpg",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/audifonos_deportivos.jpg",
       descripcion:
         "Audífonos inalámbricos con cancelación de ruido y batería de larga duración.",
       cantidad: 1,
@@ -74,7 +74,7 @@ const VideosPage: React.FC = () => {
     {
       nombre: "Set de Pintura Acrílica 24 Colores",
       precio: "$29.990 COP",
-      imagen: "/src/assets/IMG/Index/set.jpg",
+      imagen: "/JOSNISHOP_000/assets/IMG/Index/set.jpg",
       descripcion:
         "Set de pintura acrílica profesional, ideal para artistas y principiantes.",
       cantidad: 1,

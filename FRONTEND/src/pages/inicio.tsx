@@ -488,7 +488,7 @@ const Inicio: React.FC = () => {
       {/* CARRUSEL */}
       <div className="carousel">
         <div className="carousel-inner" ref={innerRef}>
-          {["/src/assets/IMG/index/carrusel1.png", "/src/assets/IMG/index/carrusel2.png", "/src/assets/IMG/index/carrusel3.png"].map((src, i) => (
+          {["/JOSNISHOP_000/assets/IMG/index/carrusel1.png", "/JOSNISHOP_000/assets/IMG/index/carrusel2.png", "/JOSNISHOP_000/assets/IMG/index/carrusel3.png"].map((src, i) => (
             <div
               key={i}
               className={`carousel-item ${i === 0 ? "active" : ""}`}
@@ -529,12 +529,12 @@ const Inicio: React.FC = () => {
                     onError={e => {
                       const target = e.currentTarget;
                       target.onerror = null;
-                      target.src = "/src/assets/IMG/index/no-image.png";
+                      target.src = "/JOSNISHOP_000/assets/IMG/index/no-image.png";
                     }}
                   />
                 ) : (
                   <img
-                    src={"/src/assets/IMG/index/no-image.png"}
+                    src={"/JOSNISHOP_000/assets/IMG/index/no-image.png"}
                     alt="Sin imagen"
                   />
                 )}

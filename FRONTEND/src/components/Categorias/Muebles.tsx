@@ -110,13 +110,13 @@ const Muebles: React.FC = () => {
               <div key={p.id} style={{ background: "#fff", borderRadius: 8, padding: 12, boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
                 <div style={{ height: 140, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 8 }}>
                   <img
-                    src={p.image || "/src/assets/IMG/index/no-image.png"}
+                    src={p.image || "/JOSNISHOP_000/assets/IMG/index/no-image.png"}
                     alt={p.nombre}
                     style={{ maxHeight: 140, maxWidth: "100%", objectFit: "cover", borderRadius: 6 }}
                     onError={e => {
                       const target = e.currentTarget;
                       target.onerror = null;
-                      target.src = "/src/assets/IMG/index/no-image.png";
+                      target.src = "/JOSNISHOP_000/assets/IMG/index/no-image.png";
                     }}
                   />
                 </div>

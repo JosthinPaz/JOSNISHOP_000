@@ -7,9 +7,9 @@ const ProductoAudifonosE6S: React.FC = () => {
   const innerRef = useRef<HTMLDivElement>(null);
 
   const items = [
-    "/src/assets/IMG/index/carrusel1.png",
-    "/src/assets/IMG/index/carrusel2.png",
-    "/src/assets/IMG/index/carrusel3.png",
+    "/JOSNISHOP_000/assets/IMG/index/carrusel1.png",
+    "/JOSNISHOP_000/assets/IMG/index/carrusel2.png",
+    "/JOSNISHOP_000/assets/IMG/index/carrusel3.png",
   ];
 
   // Carrusel
@@ -61,7 +61,7 @@ const ProductoAudifonosE6S: React.FC = () => {
       {/* CONTENIDO PRINCIPAL */}
       <div className="producto-container">
         <div className="producto-imagen">
-          <img src="/src/assets/IMG/index/audifonos.png" alt="Audífonos E6S" />
+          <img src="/JOSNISHOP_000/assets/IMG/index/audifonos.png" alt="Audífonos E6S" />
         </div>
         <div className="producto-info">
           <h2>
@@ -139,11 +139,11 @@ const ProductoAudifonosE6S: React.FC = () => {
       {showVideos && (
         <div id="videosContainer" className="videos-container">
           <video controls>
-            <source src="/src/assets/videos/index/audifonos/video1.mp4" type="video/mp4" />
+            <source src="/JOSNISHOP_000/assets/videos/index/audifonos/video1.mp4" type="video/mp4" />
             Tu navegador no soporta el video.
           </video>
           <video controls>
-            <source src="/src/assets/videos/index/audifonos/video2.mp4" type="video/mp4" />
+            <source src="/JOSNISHOP_000/assets/videos/index/audifonos/video2.mp4" type="video/mp4" />
             Tu navegador no soporta el video.
           </video>
         </div>

@@ -139,7 +139,7 @@ const Login: React.FC = () => {
       <div className="login-left">
         <div className="gallery">
           <video
-            src="/src/assets/IMG/inicio_video.mp4"
+            src="/JOSNISHOP_000/assets/IMG/inicio_video.mp4"
             autoPlay
             loop
             muted
